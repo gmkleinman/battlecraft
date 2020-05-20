@@ -1,4 +1,6 @@
 const Unit = require("./unit");
+const tree = require("../assets/tree.jpg")
+const rig = require("../assets/rig.gif")
 
 class Game {
     constructor(ctx) {
@@ -7,34 +9,50 @@ class Game {
     }
 
     
-    createArmy(team) {
+    createArmy(team, type) {
         let startPos;
         let vel;
 
         if(team === "green") {
             startPos = 200
             vel = [1,0]
+            type ='cat'
         } else {
             startPos = 700
             vel = [-1,0]
+            type = 'blob'
         }
 
-        for (let i = 200; i < 350; i+=50) {
+        for (let i = 175; i < 325; i+=50) {
             this.units.push(new Unit({
                 pos: [startPos,i],
                 vel,
                 team,
+                type,
             }));        
-        }    
+        } 
     }
 
     drawBoard() {
-        this.ctx.fillStyle = "#80deea";
+        //arena
+        let grd = this.ctx.createLinearGradient(0, 0, 800, 0);
+        grd.addColorStop(0, "#4bb436");
+        grd.addColorStop(1, "#aa6300");
+        this.ctx.fillStyle = grd;
         this.ctx.fillRect(50,150,800,200)
-        this.ctx.fillStyle = "green";
-        this.ctx.fillRect(75,238,25,25)
-        this.ctx.fillStyle = "red";
-        this.ctx.fillRect(800,238,25,25)
+
+        //green's base
+        let greenBase = new Image(200,200);
+        greenBase.src = tree;
+        this.ctx.drawImage(greenBase, 75, 215, 50, 50);
+
+        
+        //red's base
+        let redBase = new Image();
+        redBase.width = "25";
+        redBase.src = rig;
+        this.ctx.drawImage(redBase, 775, 215, 50, 50);
+        
     }
 
     drawUnits() {
