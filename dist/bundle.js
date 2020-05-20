@@ -152,6 +152,17 @@ module.exports = __webpack_require__.p + "b128e8f0e620cebcc2d30907d7889055.png";
 
 /***/ }),
 
+/***/ "./assets/hadoken1.png":
+/*!*****************************!*\
+  !*** ./assets/hadoken1.png ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "7fb4ec026a28fb69882b7a2cfec4d164.png";
+
+/***/ }),
+
 /***/ "./assets/rig.gif":
 /*!************************!*\
   !*** ./assets/rig.gif ***!
@@ -182,13 +193,16 @@ module.exports = __webpack_require__.p + "c14702dca898c96e30e0a8f26590c72c.jpg";
 /***/ (function(module, exports, __webpack_require__) {
 
 const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
 const tree = __webpack_require__(/*! ../assets/tree.jpg */ "./assets/tree.jpg")
 const rig = __webpack_require__(/*! ../assets/rig.gif */ "./assets/rig.gif")
+
 
 class Game {
     constructor(ctx) {
         this.ctx = ctx;
         this.units = [];
+        this.projectiles = [];
     }
 
     
@@ -244,16 +258,79 @@ class Game {
         });
     }
 
-    moveUnits() {
-        this.units.forEach(unit => {
-            unit.move();
+    drawProjectiles() {
+        this.projectiles.forEach(projectile => {
+            projectile.draw(this.ctx);
         });
+    }
+
+    distance(pos1, pos2) {
+        let a = pos1[0] - pos2[0];
+        let b = pos1[1] - pos2[1];
+        return Math.sqrt( a*a + b*b );
+    }
+
+    unitInRange(currentUnit) {
+        let enemyInRange = false;
+        // let allyInRange = false;
+
+        this.units.forEach(otherUnit => {
+            let distance = this.distance(currentUnit.pos, otherUnit.pos)
+            if ( distance <= 100 && currentUnit.team != otherUnit.team) {
+                enemyInRange = true;
+            }
+        });
+        return enemyInRange;
+    }
+
+    moveUnits() {
+        //this is horrible brute force - should optimize later, esp. if performance issues
+        this.units.forEach(unit => {
+            if(this.unitInRange(unit) === true) {
+                unit.moving = false;
+                unit.attacking = true;
+            } else {
+                unit.moving = true;
+                unit.attacking = false;
+            }
+            if(unit.moving === true) unit.move();
+            if(unit.attacking === true) this.attack(unit);
+        });
+    }
+
+    moveProjectiles() {
+        this.projectiles.forEach(projectile => {
+            projectile.move();
+        })
+    }
+
+    attack(unit) { 
+        let vel;
+        if (unit.team === 'green') {
+            vel = [2,0]
+        } else {
+            vel = [-2,0]
+        }
+
+        if (unit.attackCooldown >= unit.timeBetweenAttacks) {
+            unit.attackCooldown = 0;
+            let pos = unit.pos.slice(0)
+            let team = unit.team
+            this.projectiles.push(new Projectile({
+                pos,
+                vel,
+                team,
+            }))
+        } else {
+            unit.attackCooldown += 1;
+        }
     }
 
     drawAll() {
         this.ctx.clearRect(0, 0, 900, 400);
         this.drawBoard();
         this.drawUnits();
+        this.drawProjectiles();
     }
 
     start() {
@@ -262,7 +339,8 @@ class Game {
         setInterval(() => {
             this.drawAll();
             this.moveUnits();
-        }, 17)
+            this.moveProjectiles();
+        }, 5) //17 is "standard" speed
     }
 }
 
@@ -302,6 +380,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /***/ }),
 
+/***/ "./src/projectile.js":
+/*!***************************!*\
+  !*** ./src/projectile.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const hadokenUrl = __webpack_require__(/*! ../assets/hadoken1.png */ "./assets/hadoken1.png")
+
+class Projectile {
+    constructor(obj) {
+        this.pos = obj.pos;
+        this.vel = obj.vel;
+        this.team = obj.team;
+    }
+
+    draw(ctx) {
+        let hadoken = new Image();
+        hadoken.src = hadokenUrl;
+        let x = this.pos[0];
+        let y = this.pos[1];
+        ctx.drawImage(hadoken, x, y, 50, 50)
+    }
+
+    move() {
+        this.pos[0] += this.vel[0];
+        this.pos[1] += this.vel[1];
+    }
+}
+
+module.exports = Projectile;
+
+/***/ }),
+
 /***/ "./src/unit.js":
 /*!*********************!*\
   !*** ./src/unit.js ***!
@@ -327,15 +439,14 @@ class Unit {
         this.team = obj.team;
         this.type = obj.type;
         this.animationFrame = 0;
+        this.moving = true;
+        this.attacking = false;
+        this.attackCooldown = 300;
+        this.timeBetweenAttacks = 300;
+        this.projectile = 'hadoken';
     }
 
     draw(ctx) {
-        // let x = this.pos[0];
-        // let y = this.pos[1];
-        // ctx.beginPath();
-        // ctx.fillStyle = this.team;
-        // ctx.arc(x, y, 20, 0, 2 * Math.PI);
-        // ctx.fill();
         if (this.type === 'cat') {
             this.renderCat(ctx);
         } else {
@@ -345,9 +456,8 @@ class Unit {
 
     renderCat(ctx) {
         let cat = new Image();
-        cat.width = "25";
         
-        this.animationFrame += 1;
+        if (this.moving === true) this.animationFrame += 1;
 
         if(this.animationFrame < ANIMATE_FRAMES) {
             cat.src = catUrl1;
@@ -366,8 +476,8 @@ class Unit {
 
     renderBlob(ctx) {
         let blob = new Image();
-        blob.width = "25";
-        this.animationFrame += 1;
+
+        if (this.moving === true) this.animationFrame += 1;
         
         if(this.animationFrame < ANIMATE_FRAMES) {
             blob.src = blobUrl1;

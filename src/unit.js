@@ -16,15 +16,14 @@ class Unit {
         this.team = obj.team;
         this.type = obj.type;
         this.animationFrame = 0;
+        this.moving = true;
+        this.attacking = false;
+        this.attackCooldown = 300;
+        this.timeBetweenAttacks = 300;
+        this.projectile = 'hadoken';
     }
 
     draw(ctx) {
-        // let x = this.pos[0];
-        // let y = this.pos[1];
-        // ctx.beginPath();
-        // ctx.fillStyle = this.team;
-        // ctx.arc(x, y, 20, 0, 2 * Math.PI);
-        // ctx.fill();
         if (this.type === 'cat') {
             this.renderCat(ctx);
         } else {
@@ -34,9 +33,8 @@ class Unit {
 
     renderCat(ctx) {
         let cat = new Image();
-        cat.width = "25";
         
-        this.animationFrame += 1;
+        if (this.moving === true) this.animationFrame += 1;
 
         if(this.animationFrame < ANIMATE_FRAMES) {
             cat.src = catUrl1;
@@ -55,8 +53,8 @@ class Unit {
 
     renderBlob(ctx) {
         let blob = new Image();
-        blob.width = "25";
-        this.animationFrame += 1;
+
+        if (this.moving === true) this.animationFrame += 1;
         
         if(this.animationFrame < ANIMATE_FRAMES) {
             blob.src = blobUrl1;
