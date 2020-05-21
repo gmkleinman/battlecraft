@@ -5,6 +5,8 @@ const catUrl3 = require("../assets/cat3.png")
 const blobUrl1 = require("../assets/blob1.png")
 const blobUrl2 = require("../assets/blob2.png")
 const blobUrl3 = require("../assets/blob3.png")
+const Projectile = require("./projectile");
+
 
 const ANIMATE_FRAMES = 8;
 
@@ -21,6 +23,8 @@ class Unit {
         this.attackCooldown = 300;
         this.timeBetweenAttacks = 300;
         this.projectile = 'hadoken';
+        this.width = 50;
+        this.height = 50;
     }
 
     draw(ctx) {
@@ -48,7 +52,7 @@ class Unit {
 
         let x = this.pos[0];
         let y = this.pos[1];
-        ctx.drawImage(cat, x, y, 50, 50);
+        ctx.drawImage(cat, x, y, this.width, this.height);
     }
 
     renderBlob(ctx) {
@@ -68,7 +72,30 @@ class Unit {
 
         let x = this.pos[0];
         let y = this.pos[1];
-        ctx.drawImage(blob, x, y, 50, 50);
+        ctx.drawImage(blob, x, y, this.width, this.height);
+    }
+
+    attack() {
+        
+        let vel;
+        if (this.team === 'green') {
+            vel = [2,0]
+        } else {
+            vel = [-2,0]
+        }    
+        if (this.attackCooldown >= this.timeBetweenAttacks) {
+            this.attackCooldown = 0;
+            let pos = this.pos.slice(0)
+            let team = this.team
+            return new Projectile({
+                pos,
+                vel,
+                team,
+            })
+        } else {
+            this.attackCooldown += 1;
+            return null;
+        }    
     }
 
     move() {

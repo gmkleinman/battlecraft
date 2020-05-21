@@ -5,6 +5,8 @@ class Projectile {
         this.pos = obj.pos;
         this.vel = obj.vel;
         this.team = obj.team;
+        this.width = 50;
+        this.height = 50;
     }
 
     draw(ctx) {
@@ -12,7 +14,7 @@ class Projectile {
         hadoken.src = hadokenUrl;
         let x = this.pos[0];
         let y = this.pos[1];
-        ctx.drawImage(hadoken, x, y, 50, 50)
+        ctx.drawImage(hadoken, x, y, this.width, this.height)
     }
 
     move() {

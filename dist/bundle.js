@@ -205,7 +205,6 @@ class Game {
         this.projectiles = [];
     }
 
-    
     createArmy(team, type) {
         let startPos;
         let vel;
@@ -270,23 +269,73 @@ class Game {
         return Math.sqrt( a*a + b*b );
     }
 
-    unitInRange(currentUnit) {
+    acquireTarget(currentUnit) {
         let enemyInRange = false;
         // let allyInRange = false;
 
         this.units.forEach(otherUnit => {
             let distance = this.distance(currentUnit.pos, otherUnit.pos)
-            if ( distance <= 100 && currentUnit.team != otherUnit.team) {
+            if ( distance <= 200 && currentUnit.team != otherUnit.team) {
                 enemyInRange = true;
+                let newProjectile = currentUnit.attack();
+                if (newProjectile) {
+                    this.projectiles.push(newProjectile);
+                    console.log("projectile created!");
+                }
             }
         });
         return enemyInRange;
     }
+    
 
+    checkCollisions() {
+        //for each unit,
+        for (let i = 0; i < this.units.length; i++) {
+            let unit = this.units[i];
+            let x1 = unit.pos[0] - unit.width/2
+            let x2 = unit.pos[0] + unit.width/2
+            let y1 = unit.pos[1] - unit.height/2
+            let y2 = unit.pos[1] + unit.height/2
+
+            for (let j = 0; j < this.projectiles.length; j++) {
+
+                let projectile = this.projectiles[j];
+                let x3 = projectile.pos[0] - projectile.width/2
+                let x4 = projectile.pos[0] + projectile.width/2
+                let y3 = projectile.pos[1] - projectile.height/2
+                let y4 = projectile.pos[1] + projectile.height/2
+                if (
+                    ((x1 <= x3 && x2 >= x3) || (x1 <= x4 && x2 >= x4))
+                    && ((y1 <= y3 && y2 >= y3) || (y1 <= y4 && y2 >= y4))
+                    ) {
+                        //on collision, removes both projectile and enemy
+                        if (unit.team != projectile.team) {
+                            this.units.splice(i,1)
+                            this.projectiles.splice(j,1)
+                        }
+                }
+            }
+        }
+    }
+
+    // checkBounds() {
+    //     for (let i = 0; i < this.units.length; i++) {
+    //         let unit = units[i];
+
+
+    //     }
+
+    //     for (let j = 0; j < this.projectiles.length; j++) {
+    //         let projectile = projectiles[i];
+
+    //     }
+
+    // }
+    
     moveUnits() {
         //this is horrible brute force - should optimize later, esp. if performance issues
         this.units.forEach(unit => {
-            if(this.unitInRange(unit) === true) {
+            if(this.acquireTarget(unit) === true) {
                 unit.moving = false;
                 unit.attacking = true;
             } else {
@@ -294,7 +343,6 @@ class Game {
                 unit.attacking = false;
             }
             if(unit.moving === true) unit.move();
-            if(unit.attacking === true) this.attack(unit);
         });
     }
 
@@ -302,28 +350,6 @@ class Game {
         this.projectiles.forEach(projectile => {
             projectile.move();
         })
-    }
-
-    attack(unit) { 
-        let vel;
-        if (unit.team === 'green') {
-            vel = [2,0]
-        } else {
-            vel = [-2,0]
-        }
-
-        if (unit.attackCooldown >= unit.timeBetweenAttacks) {
-            unit.attackCooldown = 0;
-            let pos = unit.pos.slice(0)
-            let team = unit.team
-            this.projectiles.push(new Projectile({
-                pos,
-                vel,
-                team,
-            }))
-        } else {
-            unit.attackCooldown += 1;
-        }
     }
 
     drawAll() {
@@ -340,6 +366,7 @@ class Game {
             this.drawAll();
             this.moveUnits();
             this.moveProjectiles();
+            this.checkCollisions();
         }, 5) //17 is "standard" speed
     }
 }
@@ -394,6 +421,8 @@ class Projectile {
         this.pos = obj.pos;
         this.vel = obj.vel;
         this.team = obj.team;
+        this.width = 50;
+        this.height = 50;
     }
 
     draw(ctx) {
@@ -401,7 +430,7 @@ class Projectile {
         hadoken.src = hadokenUrl;
         let x = this.pos[0];
         let y = this.pos[1];
-        ctx.drawImage(hadoken, x, y, 50, 50)
+        ctx.drawImage(hadoken, x, y, this.width, this.height)
     }
 
     move() {
@@ -428,6 +457,8 @@ const catUrl3 = __webpack_require__(/*! ../assets/cat3.png */ "./assets/cat3.png
 const blobUrl1 = __webpack_require__(/*! ../assets/blob1.png */ "./assets/blob1.png")
 const blobUrl2 = __webpack_require__(/*! ../assets/blob2.png */ "./assets/blob2.png")
 const blobUrl3 = __webpack_require__(/*! ../assets/blob3.png */ "./assets/blob3.png")
+const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
+
 
 const ANIMATE_FRAMES = 8;
 
@@ -444,6 +475,8 @@ class Unit {
         this.attackCooldown = 300;
         this.timeBetweenAttacks = 300;
         this.projectile = 'hadoken';
+        this.width = 50;
+        this.height = 50;
     }
 
     draw(ctx) {
@@ -471,7 +504,7 @@ class Unit {
 
         let x = this.pos[0];
         let y = this.pos[1];
-        ctx.drawImage(cat, x, y, 50, 50);
+        ctx.drawImage(cat, x, y, this.width, this.height);
     }
 
     renderBlob(ctx) {
@@ -491,7 +524,30 @@ class Unit {
 
         let x = this.pos[0];
         let y = this.pos[1];
-        ctx.drawImage(blob, x, y, 50, 50);
+        ctx.drawImage(blob, x, y, this.width, this.height);
+    }
+
+    attack() {
+        
+        let vel;
+        if (this.team === 'green') {
+            vel = [2,0]
+        } else {
+            vel = [-2,0]
+        }    
+        if (this.attackCooldown >= this.timeBetweenAttacks) {
+            this.attackCooldown = 0;
+            let pos = this.pos.slice(0)
+            let team = this.team
+            return new Projectile({
+                pos,
+                vel,
+                team,
+            })
+        } else {
+            this.attackCooldown += 1;
+            return null;
+        }    
     }
 
     move() {
