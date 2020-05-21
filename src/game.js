@@ -1,7 +1,6 @@
 const Unit = require("./unit");
-const Projectile = require("./projectile");
-const tree = require("../assets/tree.jpg")
-const rig = require("../assets/rig.gif")
+const Base = require('./base')
+const Player = require('./player')
 
 
 class Game {
@@ -9,52 +8,52 @@ class Game {
         this.ctx = ctx;
         this.units = [];
         this.projectiles = [];
+        this.players = [];
     }
 
-    createArmy(team, type) {
+    createPlayers() {
+        this.players.push(
+            new Player('green'),
+            new Player('red'))
+    }
+
+    createBases() {
+        this.units.push(
+            new Base('green'), 
+            new Base('red'))
+    }
+
+    createArmy(player, type) {
         let startPos;
         let vel;
 
-        if(team === "green") {
+        if(player.team === "green") {
             startPos = 200
             vel = [1,0]
-            type ='cat'
         } else {
-            startPos = 700
+            startPos = 650 
             vel = [-1,0]
-            type = 'blob'
         }
 
-        for (let i = 175; i < 325; i+=50) {
-            this.units.push(new Unit({
-                pos: [startPos,i],
-                vel,
-                team,
-                type,
-            }));        
-        } 
+        if( player.spend(1000) ) {
+            for (let i = 175; i < 325; i+=55) {
+                this.units.push(new Unit({
+                    pos: [startPos + Math.random()*50,i],
+                    vel,
+                    team: player.team,
+                    type,
+                }));        
+            } 
+        }
+
     }
 
-    drawBoard() {
-        //arena
+    drawArena() {
         let grd = this.ctx.createLinearGradient(0, 0, 800, 0);
         grd.addColorStop(0, "#4bb436");
         grd.addColorStop(1, "#aa6300");
         this.ctx.fillStyle = grd;
         this.ctx.fillRect(50,150,800,200)
-
-        //green's base
-        let greenBase = new Image(200,200);
-        greenBase.src = tree;
-        this.ctx.drawImage(greenBase, 75, 215, 50, 50);
-
-        
-        //red's base
-        let redBase = new Image();
-        redBase.width = "25";
-        redBase.src = rig;
-        this.ctx.drawImage(redBase, 775, 215, 50, 50);
-        
     }
 
     drawUnits() {
@@ -76,26 +75,25 @@ class Game {
     }
 
     acquireTarget(currentUnit) {
-        let enemyInRange = false;
-        // let allyInRange = false;
+        let target = 'none';
 
         this.units.forEach(otherUnit => {
             let distance = this.distance(currentUnit.pos, otherUnit.pos)
             if ( distance <= 200 && currentUnit.team != otherUnit.team) {
-                enemyInRange = true;
-                let newProjectile = currentUnit.attack();
+                target = 'enemy';
+                let newProjectile = currentUnit.attack(otherUnit.pos);
                 if (newProjectile) {
                     this.projectiles.push(newProjectile);
-                    console.log("projectile created!");
                 }
+            } else if(currentUnit.team === otherUnit.team && this.checkAllyCollision(currentUnit, otherUnit)) {
+                target = 'ally';
             }
         });
-        return enemyInRange;
+        return target;
     }
     
 
-    checkCollisions() {
-        //for each unit,
+    checkProjectileCollisions() {
         for (let i = 0; i < this.units.length; i++) {
             let unit = this.units[i];
             let x1 = unit.pos[0] - unit.width/2
@@ -114,12 +112,41 @@ class Game {
                     ((x1 <= x3 && x2 >= x3) || (x1 <= x4 && x2 >= x4))
                     && ((y1 <= y3 && y2 >= y3) || (y1 <= y4 && y2 >= y4))
                     ) {
-                        //on collision, removes both projectile and enemy
                         if (unit.team != projectile.team) {
-                            this.units.splice(i,1)
+                            unit.hp -= projectile.damage;
                             this.projectiles.splice(j,1)
                         }
                 }
+            }
+        }
+    }
+
+    checkAllyCollision(ally1, ally2) { //this is not DRY, fix later
+        if(ally1 === ally2) return false;
+        let x1 = ally1.pos[0] - ally1.width/2
+        let x2 = ally1.pos[0] + ally1.width/2
+        let y1 = ally1.pos[1] - ally1.height/2
+        let y2 = ally1.pos[1] + ally1.height/2
+        let x3 = ally2.pos[0] - ally2.width/2
+        let x4 = ally2.pos[0] + ally2.width/2
+        let y3 = ally2.pos[1] - ally2.height/2
+        let y4 = ally2.pos[1] + ally2.height/2
+        if (((x1 <= x3 && x2 >= x3) || (x1 <= x4 && x2 >= x4))
+            && ((y1 <= y3 && y2 >= y3) || (y1 <= y4 && y2 >= y4))) {
+            if (ally1.team === 'green' && x3 >= x1) {
+                return true;
+            } else if (ally1.team === 'red' && x1 >= x3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    checkEliminations() {
+        for (let i = 0; i < this.units.length; i++) {
+            let unit = this.units[i];
+            if (unit.hp <= 0) {
+                this.units.splice(i,1)
             }
         }
     }
@@ -141,9 +168,13 @@ class Game {
     moveUnits() {
         //this is horrible brute force - should optimize later, esp. if performance issues
         this.units.forEach(unit => {
-            if(this.acquireTarget(unit) === true) {
+            let target = this.acquireTarget(unit)
+            if(target === 'enemy') {
                 unit.moving = false;
                 unit.attacking = true;
+            } else if(target === 'ally') {
+                unit.moving = false;
+                unit.attacking = false;
             } else {
                 unit.moving = true;
                 unit.attacking = false;
@@ -160,19 +191,35 @@ class Game {
 
     drawAll() {
         this.ctx.clearRect(0, 0, 900, 400);
-        this.drawBoard();
+        this.drawArena();
         this.drawUnits();
         this.drawProjectiles();
     }
 
+    giveIncome(){
+        this.players.forEach(player => {
+            player.earn();
+        })
+    }
+
+    renderGold() {
+        document.getElementById('gold').innerHTML = `${this.players[0].gold}`
+    }
+
     start() {
-        this.createArmy("green");
-        this.createArmy("red");
+        this.createPlayers();
+        this.createArmy(this.players[0], 'cat');
+        this.createArmy(this.players[1], 'blob');
+        this.createBases();
+
         setInterval(() => {
             this.drawAll();
             this.moveUnits();
             this.moveProjectiles();
-            this.checkCollisions();
+            this.checkProjectileCollisions();
+            this.checkEliminations();
+            this.giveIncome();
+            this.renderGold();
         }, 5) //17 is "standard" speed
     }
 }

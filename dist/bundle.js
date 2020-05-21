@@ -185,6 +185,67 @@ module.exports = __webpack_require__.p + "c14702dca898c96e30e0a8f26590c72c.jpg";
 
 /***/ }),
 
+/***/ "./src/base.js":
+/*!*********************!*\
+  !*** ./src/base.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const tree = __webpack_require__(/*! ../assets/tree.jpg */ "./assets/tree.jpg")
+const rig = __webpack_require__(/*! ../assets/rig.gif */ "./assets/rig.gif")
+
+class Base {
+    constructor(team) {
+        this.vel = [0,0];
+        this.team = team;
+        this.type = 'base';
+        this.animationFrame = 0;
+        this.moving = true;
+        this.attacking = false;
+        this.attackCooldown = 300;
+        this.timeBetweenAttacks = 300;
+        this.projectile = 'hadoken';
+        this.hp = 10;
+        this.width = 100;
+        this.height = 100;
+
+        if (team === 'green') {
+            this.pos = [75,215];
+        } else {
+            this.pos = [750,215]
+        }
+    }
+
+    attack(pos) {
+        return null;
+    }
+
+    move() {
+        return null;
+    }
+
+    draw(ctx) {
+        let x = this.pos[0];
+        let y = this.pos[1];
+        if (this.team === 'green') {
+            let greenBase = new Image();
+            greenBase.src = tree;
+            ctx.drawImage(greenBase, x, y, this.width, this.height);
+        } else {
+            let redBase = new Image();
+            redBase.src = rig;
+            ctx.drawImage(redBase, x, y, this.width, this.height);
+        }
+
+    }
+}
+
+module.exports = Base;
+
+
+/***/ }),
+
 /***/ "./src/game.js":
 /*!*********************!*\
   !*** ./src/game.js ***!
@@ -193,9 +254,8 @@ module.exports = __webpack_require__.p + "c14702dca898c96e30e0a8f26590c72c.jpg";
 /***/ (function(module, exports, __webpack_require__) {
 
 const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
-const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
-const tree = __webpack_require__(/*! ../assets/tree.jpg */ "./assets/tree.jpg")
-const rig = __webpack_require__(/*! ../assets/rig.gif */ "./assets/rig.gif")
+const Base = __webpack_require__(/*! ./base */ "./src/base.js")
+const Player = __webpack_require__(/*! ./player */ "./src/player.js")
 
 
 class Game {
@@ -203,52 +263,52 @@ class Game {
         this.ctx = ctx;
         this.units = [];
         this.projectiles = [];
+        this.players = [];
     }
 
-    createArmy(team, type) {
+    createPlayers() {
+        this.players.push(
+            new Player('green'),
+            new Player('red'))
+    }
+
+    createBases() {
+        this.units.push(
+            new Base('green'), 
+            new Base('red'))
+    }
+
+    createArmy(player, type) {
         let startPos;
         let vel;
 
-        if(team === "green") {
+        if(player.team === "green") {
             startPos = 200
             vel = [1,0]
-            type ='cat'
         } else {
-            startPos = 700
+            startPos = 650 
             vel = [-1,0]
-            type = 'blob'
         }
 
-        for (let i = 175; i < 325; i+=50) {
-            this.units.push(new Unit({
-                pos: [startPos,i],
-                vel,
-                team,
-                type,
-            }));        
-        } 
+        if( player.spend(1000) ) {
+            for (let i = 175; i < 325; i+=55) {
+                this.units.push(new Unit({
+                    pos: [startPos + Math.random()*50,i],
+                    vel,
+                    team: player.team,
+                    type,
+                }));        
+            } 
+        }
+
     }
 
-    drawBoard() {
-        //arena
+    drawArena() {
         let grd = this.ctx.createLinearGradient(0, 0, 800, 0);
         grd.addColorStop(0, "#4bb436");
         grd.addColorStop(1, "#aa6300");
         this.ctx.fillStyle = grd;
         this.ctx.fillRect(50,150,800,200)
-
-        //green's base
-        let greenBase = new Image(200,200);
-        greenBase.src = tree;
-        this.ctx.drawImage(greenBase, 75, 215, 50, 50);
-
-        
-        //red's base
-        let redBase = new Image();
-        redBase.width = "25";
-        redBase.src = rig;
-        this.ctx.drawImage(redBase, 775, 215, 50, 50);
-        
     }
 
     drawUnits() {
@@ -270,26 +330,25 @@ class Game {
     }
 
     acquireTarget(currentUnit) {
-        let enemyInRange = false;
-        // let allyInRange = false;
+        let target = 'none';
 
         this.units.forEach(otherUnit => {
             let distance = this.distance(currentUnit.pos, otherUnit.pos)
             if ( distance <= 200 && currentUnit.team != otherUnit.team) {
-                enemyInRange = true;
-                let newProjectile = currentUnit.attack();
+                target = 'enemy';
+                let newProjectile = currentUnit.attack(otherUnit.pos);
                 if (newProjectile) {
                     this.projectiles.push(newProjectile);
-                    console.log("projectile created!");
                 }
+            } else if(currentUnit.team === otherUnit.team && this.checkAllyCollision(currentUnit, otherUnit)) {
+                target = 'ally';
             }
         });
-        return enemyInRange;
+        return target;
     }
     
 
-    checkCollisions() {
-        //for each unit,
+    checkProjectileCollisions() {
         for (let i = 0; i < this.units.length; i++) {
             let unit = this.units[i];
             let x1 = unit.pos[0] - unit.width/2
@@ -308,12 +367,41 @@ class Game {
                     ((x1 <= x3 && x2 >= x3) || (x1 <= x4 && x2 >= x4))
                     && ((y1 <= y3 && y2 >= y3) || (y1 <= y4 && y2 >= y4))
                     ) {
-                        //on collision, removes both projectile and enemy
                         if (unit.team != projectile.team) {
-                            this.units.splice(i,1)
+                            unit.hp -= projectile.damage;
                             this.projectiles.splice(j,1)
                         }
                 }
+            }
+        }
+    }
+
+    checkAllyCollision(ally1, ally2) { //this is not DRY, fix later
+        if(ally1 === ally2) return false;
+        let x1 = ally1.pos[0] - ally1.width/2
+        let x2 = ally1.pos[0] + ally1.width/2
+        let y1 = ally1.pos[1] - ally1.height/2
+        let y2 = ally1.pos[1] + ally1.height/2
+        let x3 = ally2.pos[0] - ally2.width/2
+        let x4 = ally2.pos[0] + ally2.width/2
+        let y3 = ally2.pos[1] - ally2.height/2
+        let y4 = ally2.pos[1] + ally2.height/2
+        if (((x1 <= x3 && x2 >= x3) || (x1 <= x4 && x2 >= x4))
+            && ((y1 <= y3 && y2 >= y3) || (y1 <= y4 && y2 >= y4))) {
+            if (ally1.team === 'green' && x3 >= x1) {
+                return true;
+            } else if (ally1.team === 'red' && x1 >= x3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    checkEliminations() {
+        for (let i = 0; i < this.units.length; i++) {
+            let unit = this.units[i];
+            if (unit.hp <= 0) {
+                this.units.splice(i,1)
             }
         }
     }
@@ -335,9 +423,13 @@ class Game {
     moveUnits() {
         //this is horrible brute force - should optimize later, esp. if performance issues
         this.units.forEach(unit => {
-            if(this.acquireTarget(unit) === true) {
+            let target = this.acquireTarget(unit)
+            if(target === 'enemy') {
                 unit.moving = false;
                 unit.attacking = true;
+            } else if(target === 'ally') {
+                unit.moving = false;
+                unit.attacking = false;
             } else {
                 unit.moving = true;
                 unit.attacking = false;
@@ -354,19 +446,35 @@ class Game {
 
     drawAll() {
         this.ctx.clearRect(0, 0, 900, 400);
-        this.drawBoard();
+        this.drawArena();
         this.drawUnits();
         this.drawProjectiles();
     }
 
+    giveIncome(){
+        this.players.forEach(player => {
+            player.earn();
+        })
+    }
+
+    renderGold() {
+        document.getElementById('gold').innerHTML = `${this.players[0].gold}`
+    }
+
     start() {
-        this.createArmy("green");
-        this.createArmy("red");
+        this.createPlayers();
+        this.createArmy(this.players[0], 'cat');
+        this.createArmy(this.players[1], 'blob');
+        this.createBases();
+
         setInterval(() => {
             this.drawAll();
             this.moveUnits();
             this.moveProjectiles();
-            this.checkCollisions();
+            this.checkProjectileCollisions();
+            this.checkEliminations();
+            this.giveIncome();
+            this.renderGold();
         }, 5) //17 is "standard" speed
     }
 }
@@ -383,27 +491,72 @@ module.exports = Game;
 /***/ (function(module, exports, __webpack_require__) {
 
 const Game = __webpack_require__(/*! ./game */ "./src/game.js")
+const GAMEHEIGHT = 900
+const GAMEWIDTH = 400
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvasEl = document.getElementById("canvas");
-    canvasEl.width = 900;
-    canvasEl.height = 400;
+    canvasEl.width = GAMEHEIGHT;
+    canvasEl.height = GAMEWIDTH;
 
     const ctx = canvas.getContext('2d');
     game = new Game(ctx);
     game.start();
 
-    document.getElementById("spawnGreen").onclick = () => { 
-        game.createArmy('green');
+    document.getElementById("spawnCat").onclick = () => { 
+        game.createArmy(game.players[0], 'cat');
     } 
 
-    document.getElementById("spawnRed").onclick = () => { 
-        game.createArmy('red');
+    document.getElementById("spawnBlob").onclick = () => { 
+        game.createArmy(game.players[1], 'blob');
     } 
-
 
 })
 
+
+/***/ }),
+
+/***/ "./src/player.js":
+/*!***********************!*\
+  !*** ./src/player.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+class Player {
+    constructor(team) {
+        this.team = team;
+        this.gold = 1000;
+        this.income = 100;
+        this.incomeTimer = 0;
+        this.incomeCooldown = 100;
+
+        if (team === 'red') {
+            this.gold = 999999999;
+        }
+    }
+
+    spend(amt) {
+        if(this.gold >= amt) {
+            this.gold -= amt;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    earn() {
+        if(this.incomeTimer > this.incomeCooldown) {
+            this.gold += this.income;
+            this.incomeTimer = 0;
+        }
+        else {
+            this.incomeTimer += 1;
+        }
+    }
+}
+
+module.exports = Player;
 
 /***/ }),
 
@@ -423,6 +576,7 @@ class Projectile {
         this.team = obj.team;
         this.width = 50;
         this.height = 50;
+        this.damage = 1;
     }
 
     draw(ctx) {
@@ -459,7 +613,6 @@ const blobUrl2 = __webpack_require__(/*! ../assets/blob2.png */ "./assets/blob2.
 const blobUrl3 = __webpack_require__(/*! ../assets/blob3.png */ "./assets/blob3.png")
 const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
 
-
 const ANIMATE_FRAMES = 8;
 
 class Unit {
@@ -472,11 +625,12 @@ class Unit {
         this.animationFrame = 0;
         this.moving = true;
         this.attacking = false;
-        this.attackCooldown = 300;
-        this.timeBetweenAttacks = 300;
+        this.attackCooldown = 80;
+        this.timeBetweenAttacks = 100;
         this.projectile = 'hadoken';
         this.width = 50;
         this.height = 50;
+        this.hp = 3;
     }
 
     draw(ctx) {
@@ -527,14 +681,11 @@ class Unit {
         ctx.drawImage(blob, x, y, this.width, this.height);
     }
 
-    attack() {
-        
-        let vel;
-        if (this.team === 'green') {
-            vel = [2,0]
-        } else {
-            vel = [-2,0]
-        }    
+    attack(enemyPos) {
+        let vel = this.unitVector(this.pos,enemyPos);
+        vel[0] *= 3;
+        vel[1] *= 3;
+
         if (this.attackCooldown >= this.timeBetweenAttacks) {
             this.attackCooldown = 0;
             let pos = this.pos.slice(0)
@@ -553,6 +704,15 @@ class Unit {
     move() {
         this.pos[0] += this.vel[0];
         this.pos[1] += this.vel[1];
+    }
+
+    unitVector(attackerPos, defenderPos) {
+        let x = defenderPos[0] - attackerPos[0]
+        let y = defenderPos[1] - attackerPos[1]
+        let divisor = Math.max(Math.abs(x),Math.abs(y))
+        x = x/divisor
+        y = y/divisor
+        return [x,y]
     }
 }
 

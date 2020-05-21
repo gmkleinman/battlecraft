@@ -7,7 +7,6 @@ const blobUrl2 = require("../assets/blob2.png")
 const blobUrl3 = require("../assets/blob3.png")
 const Projectile = require("./projectile");
 
-
 const ANIMATE_FRAMES = 8;
 
 class Unit {
@@ -20,11 +19,12 @@ class Unit {
         this.animationFrame = 0;
         this.moving = true;
         this.attacking = false;
-        this.attackCooldown = 300;
-        this.timeBetweenAttacks = 300;
+        this.attackCooldown = 80;
+        this.timeBetweenAttacks = 100;
         this.projectile = 'hadoken';
         this.width = 50;
         this.height = 50;
+        this.hp = 3;
     }
 
     draw(ctx) {
@@ -75,14 +75,11 @@ class Unit {
         ctx.drawImage(blob, x, y, this.width, this.height);
     }
 
-    attack() {
-        
-        let vel;
-        if (this.team === 'green') {
-            vel = [2,0]
-        } else {
-            vel = [-2,0]
-        }    
+    attack(enemyPos) {
+        let vel = this.unitVector(this.pos,enemyPos);
+        vel[0] *= 3;
+        vel[1] *= 3;
+
         if (this.attackCooldown >= this.timeBetweenAttacks) {
             this.attackCooldown = 0;
             let pos = this.pos.slice(0)
@@ -101,6 +98,15 @@ class Unit {
     move() {
         this.pos[0] += this.vel[0];
         this.pos[1] += this.vel[1];
+    }
+
+    unitVector(attackerPos, defenderPos) {
+        let x = defenderPos[0] - attackerPos[0]
+        let y = defenderPos[1] - attackerPos[1]
+        let divisor = Math.max(Math.abs(x),Math.abs(y))
+        x = x/divisor
+        y = y/divisor
+        return [x,y]
     }
 }
 
