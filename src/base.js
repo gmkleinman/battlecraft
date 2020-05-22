@@ -17,9 +17,9 @@ class Base {
         this.height = 100;
 
         if (team === 'green') {
-            this.pos = [75,215];
+            this.pos = [50,175];
         } else {
-            this.pos = [750,215]
+            this.pos = [1050,175]
         }
     }
 

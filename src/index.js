@@ -1,11 +1,11 @@
 const Game = require("./game")
-const GAMEHEIGHT = 900
-const GAMEWIDTH = 400
+const GAMEHEIGHT = 400
+const GAMEWIDTH = 1200
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvasEl = document.getElementById("canvas");
-    canvasEl.width = GAMEHEIGHT;
-    canvasEl.height = GAMEWIDTH;
+    canvasEl.width = GAMEWIDTH;
+    canvasEl.height = GAMEHEIGHT;
 
     const ctx = canvas.getContext('2d');
     game = new Game(ctx);

@@ -211,9 +211,9 @@ class Base {
         this.height = 100;
 
         if (team === 'green') {
-            this.pos = [75,215];
+            this.pos = [50,175];
         } else {
-            this.pos = [750,215]
+            this.pos = [1050,175]
         }
     }
 
@@ -257,6 +257,10 @@ const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
 const Base = __webpack_require__(/*! ./base */ "./src/base.js")
 const Player = __webpack_require__(/*! ./player */ "./src/player.js")
 
+const MIN_X = 0;
+const MAX_X = 1200;
+const MIN_Y = 0;
+const MAX_Y = 400;
 
 class Game {
     constructor(ctx) {
@@ -283,15 +287,15 @@ class Game {
         let vel;
 
         if(player.team === "green") {
-            startPos = 200
+            startPos = MIN_X + 150
             vel = [1,0]
         } else {
-            startPos = 650 
+            startPos = MAX_X - 250
             vel = [-1,0]
         }
 
         if( player.spend(1000) ) {
-            for (let i = 175; i < 325; i+=55) {
+            for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
                 this.units.push(new Unit({
                     pos: [startPos + Math.random()*50,i],
                     vel,
@@ -304,11 +308,11 @@ class Game {
     }
 
     drawArena() {
-        let grd = this.ctx.createLinearGradient(0, 0, 800, 0);
+        let grd = this.ctx.createLinearGradient(0, 0, MAX_X, 0);
         grd.addColorStop(0, "#4bb436");
         grd.addColorStop(1, "#aa6300");
         this.ctx.fillStyle = grd;
-        this.ctx.fillRect(50,150,800,200)
+        this.ctx.fillRect(MIN_X,MIN_Y,MAX_X,MAX_Y)
     }
 
     drawUnits() {
@@ -406,19 +410,21 @@ class Game {
         }
     }
 
-    // checkBounds() {
-    //     for (let i = 0; i < this.units.length; i++) {
-    //         let unit = units[i];
+    outOfBounds(pos) {
+        return pos[0] > MAX_X-50 || pos[0] < MIN_X-50 || pos[1] > MAX_Y-50 || pos[1] < MIN_Y-50
+    }
 
+    ensureInBounds() {
+        for (let i = 0; i < this.units.length; i++) {
+            let unit = this.units[i];
+            if(this.outOfBounds(unit.pos)) this.units.splice(i,1)
+        }
 
-    //     }
-
-    //     for (let j = 0; j < this.projectiles.length; j++) {
-    //         let projectile = projectiles[i];
-
-    //     }
-
-    // }
+        for (let j = 0; j < this.projectiles.length; j++) {
+            let projectile = this.projectiles[j];
+            if(this.outOfBounds(projectile.pos)) this.projectiles.splice(j,1)
+        }
+    }
     
     moveUnits() {
         //this is horrible brute force - should optimize later, esp. if performance issues
@@ -445,7 +451,7 @@ class Game {
     }
 
     drawAll() {
-        this.ctx.clearRect(0, 0, 900, 400);
+        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.drawArena();
         this.drawUnits();
         this.drawProjectiles();
@@ -473,9 +479,10 @@ class Game {
             this.moveProjectiles();
             this.checkProjectileCollisions();
             this.checkEliminations();
+            this.ensureInBounds();
             this.giveIncome();
             this.renderGold();
-        }, 5) //17 is "standard" speed
+        }, 17) //17 is "standard" speed
     }
 }
 
@@ -491,13 +498,13 @@ module.exports = Game;
 /***/ (function(module, exports, __webpack_require__) {
 
 const Game = __webpack_require__(/*! ./game */ "./src/game.js")
-const GAMEHEIGHT = 900
-const GAMEWIDTH = 400
+const GAMEHEIGHT = 400
+const GAMEWIDTH = 1200
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvasEl = document.getElementById("canvas");
-    canvasEl.width = GAMEHEIGHT;
-    canvasEl.height = GAMEWIDTH;
+    canvasEl.width = GAMEWIDTH;
+    canvasEl.height = GAMEHEIGHT;
 
     const ctx = canvas.getContext('2d');
     game = new Game(ctx);
