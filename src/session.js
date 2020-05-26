@@ -37,17 +37,18 @@ class Session {
                 if(this.reset === true) this.resetGame();
             }
             
-        }, 17)
+        }, 17) //17 is 60FPS
     }
 
     renderStartScreen() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.ctx.font = "900 30px Arial";
+        this.ctx.fillStyle = "#000654"
         this.ctx.fillText("RECRUIT WILDLIFE", 100, 85);        
         this.ctx.fillText("DEFEND NATURE", 450, 85);        
-        this.ctx.fillText("DESTROY OIL RIGS", 800, 85);        
-        this.ctx.font = "50px Arial";
-        this.ctx.fillText("CLICK TO START!", MAX_X/2-225, MAX_Y/2+20);        
+        this.ctx.fillText("DESTROY OIL RIGS", 777, 85);        
+        this.ctx.font = "900 50px Arial";
+        this.ctx.fillText("CLICK TO START!", MAX_X/2-240, MAX_Y/2+15);        
     }
 
     checkGameEnd() {
@@ -69,9 +70,6 @@ class Session {
     }
 
     resetGame() {
-        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText("Next level!", 10, 50);
         this.reset = false;
         this.level = 0;
         this.setup();
@@ -96,15 +94,17 @@ class Session {
 
     renderWin() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}.`, 10, 50);
+        this.ctx.fillStyle = "#000654"
+        this.ctx.font = "900 50px Arial";
+        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}`, 155, MAX_Y/2+15);
         this.game.players[0].income = 0;
     }
 
     renderLoss() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText("YOU LOSE :( CLICK TO RESET", 10, 50);
+        this.ctx.fillStyle = "#000654"
+        this.ctx.font = "900 50px Arial";
+        this.ctx.fillText("YOU LOSE :(    CLICK TO RESET", 200, MAX_Y/2+15);
         this.game.players[0].income = 0;
     }
 

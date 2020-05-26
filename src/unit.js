@@ -1,4 +1,3 @@
-// const Game = require("./game.js");
 const catUrl1 = require("../assets/cat1.png")
 const catUrl2 = require("../assets/cat2.png")
 const catUrl3 = require("../assets/cat3.png")

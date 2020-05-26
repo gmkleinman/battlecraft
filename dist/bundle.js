@@ -225,7 +225,7 @@ module.exports = content.locals || {};
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body {\n    background: rgb(53, 54, 58);\n    font-family: 'Roboto', sans-serif;\n}\n\n#container {\n    margin-top: 50px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#game {\n    width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    border: 8px solid rgb(0, 0, 0);\n    border-radius: 8px;\n}\n\n#canvas {\n    background: rgb(130, 192, 128);\n    \n}\n\n.hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   /* background: rgb(0, 94, 8); */\n   /* background: rgb(0, 53, 5); */\n   background: rgb(0, 37, 4);\n   color: rgb(221, 221, 221);\n}\n\n/* #bottom-hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   background: rgb(0, 37, 4);\n} */\n\n#header-text {\n    display: flex;\n    justify-content: space-between;\n    align-content: space-between;\n    font-size: 30px;\n    margin-top: 7px;\n    margin-left: 25px;\n    margin-right: 25px;\n}\n\nbutton {\n    height: 30px;\n}\n\n#not-enough-sticks {\n    color: rgb(255, 110, 110);\n}", ""]);
+exports.push([module.i, "body {\n    background: rgb(53, 54, 58);\n    font-family: 'Roboto', sans-serif;\n}\n\n#container {\n    margin-top: 50px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#game {\n    width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    border: 8px solid rgb(0, 0, 0);\n    border-radius: 8px;\n}\n\n#canvas {\n    background: rgb(98, 167, 95);\n\n}\n\n.hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   /* background: rgb(0, 94, 8); */\n   /* background: rgb(0, 53, 5); */\n   background: rgb(0, 37, 4);\n   color: rgb(221, 221, 221);\n   /* color: rgb(8, 0, 126); */\n}\n\n/* #bottom-hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   background: rgb(0, 37, 4);\n} */\n\n#header-text {\n    display: flex;\n    justify-content: space-between;\n    align-content: space-between;\n    font-size: 30px;\n    margin-top: 7px;\n    margin-left: 25px;\n    margin-right: 25px;\n}\n\nbutton {\n    height: 30px;\n}\n\n#not-enough-sticks {\n    color: rgb(255, 110, 110);\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -702,6 +702,7 @@ class Game {
         this.players = [];
         this.level = level;
         this.baseDestroyed;
+        this.spawnTimer = 0;
     }
 
     createPlayers() {
@@ -915,15 +916,21 @@ class Game {
     setup() {
         this.createBases();
         this.createPlayers();
-        // this.createArmy(this.players[0], 'cat');
-        // this.createArmy(this.players[1], 'blob');
         document.getElementById("spawnCat").onclick = () => { 
             this.createArmy(this.players[0], 'cat');
         } 
-    
-        document.getElementById("spawnBlob").onclick = () => { 
+        this.spawnTimer = 700;
+        // document.getElementById("spawnBlob").onclick = () => { 
+        //     this.createArmy(this.players[1], 'blob');
+        // } 
+    }
+
+    spawnEnemies() {
+        if(this.spawnTimer >= 1000) {
             this.createArmy(this.players[1], 'blob');
-        } 
+            this.spawnTimer = 0;
+        }
+        this.spawnTimer += 1;
     }
 
     play() {
@@ -935,6 +942,7 @@ class Game {
         this.ensureInBounds();
         this.giveIncome();
         this.renderStickAmount();
+        this.spawnEnemies();
     }
 
 
@@ -983,7 +991,7 @@ class Player {
     constructor(team) {
         this.team = team;
         this.sticks = 100;
-        this.income = 5;
+        this.income = 10;
         this.incomeTimer = 0;
         this.incomeCooldown = 50;
 
@@ -1099,17 +1107,18 @@ class Session {
                 if(this.reset === true) this.resetGame();
             }
             
-        }, 17)
+        }, 17) //17 is 60FPS
     }
 
     renderStartScreen() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.ctx.font = "900 30px Arial";
+        this.ctx.fillStyle = "#000654"
         this.ctx.fillText("RECRUIT WILDLIFE", 100, 85);        
         this.ctx.fillText("DEFEND NATURE", 450, 85);        
-        this.ctx.fillText("DESTROY OIL RIGS", 800, 85);        
-        this.ctx.font = "50px Arial";
-        this.ctx.fillText("CLICK TO START!", MAX_X/2-225, MAX_Y/2+20);        
+        this.ctx.fillText("DESTROY OIL RIGS", 777, 85);        
+        this.ctx.font = "900 50px Arial";
+        this.ctx.fillText("CLICK TO START!", MAX_X/2-240, MAX_Y/2+15);        
     }
 
     checkGameEnd() {
@@ -1131,9 +1140,6 @@ class Session {
     }
 
     resetGame() {
-        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText("Next level!", 10, 50);
         this.reset = false;
         this.level = 0;
         this.setup();
@@ -1158,15 +1164,17 @@ class Session {
 
     renderWin() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}.`, 10, 50);
+        this.ctx.fillStyle = "#000654"
+        this.ctx.font = "900 50px Arial";
+        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}`, 155, MAX_Y/2+15);
         this.game.players[0].income = 0;
     }
 
     renderLoss() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText("YOU LOSE :( CLICK TO RESET", 10, 50);
+        this.ctx.fillStyle = "#000654"
+        this.ctx.font = "900 50px Arial";
+        this.ctx.fillText("YOU LOSE :(    CLICK TO RESET", 200, MAX_Y/2+15);
         this.game.players[0].income = 0;
     }
 
@@ -1186,7 +1194,6 @@ module.exports = Session;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-// const Game = require("./game.js");
 const catUrl1 = __webpack_require__(/*! ../assets/cat1.png */ "./assets/cat1.png")
 const catUrl2 = __webpack_require__(/*! ../assets/cat2.png */ "./assets/cat2.png")
 const catUrl3 = __webpack_require__(/*! ../assets/cat3.png */ "./assets/cat3.png")

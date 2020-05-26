@@ -15,6 +15,7 @@ class Game {
         this.players = [];
         this.level = level;
         this.baseDestroyed;
+        this.spawnTimer = 0;
     }
 
     createPlayers() {
@@ -228,15 +229,21 @@ class Game {
     setup() {
         this.createBases();
         this.createPlayers();
-        // this.createArmy(this.players[0], 'cat');
-        // this.createArmy(this.players[1], 'blob');
         document.getElementById("spawnCat").onclick = () => { 
             this.createArmy(this.players[0], 'cat');
         } 
-    
-        document.getElementById("spawnBlob").onclick = () => { 
+        this.spawnTimer = 700;
+        // document.getElementById("spawnBlob").onclick = () => { 
+        //     this.createArmy(this.players[1], 'blob');
+        // } 
+    }
+
+    spawnEnemies() {
+        if(this.spawnTimer >= 1000) {
             this.createArmy(this.players[1], 'blob');
-        } 
+            this.spawnTimer = 0;
+        }
+        this.spawnTimer += 1;
     }
 
     play() {
@@ -248,6 +255,7 @@ class Game {
         this.ensureInBounds();
         this.giveIncome();
         this.renderStickAmount();
+        this.spawnEnemies();
     }
 
 

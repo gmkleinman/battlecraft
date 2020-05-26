@@ -20,8 +20,8 @@ body {
 }
 
 #canvas {
-    background: rgb(130, 192, 128);
-    
+    background: rgb(98, 167, 95);
+
 }
 
 .hud {
@@ -32,6 +32,7 @@ body {
    /* background: rgb(0, 53, 5); */
    background: rgb(0, 37, 4);
    color: rgb(221, 221, 221);
+   /* color: rgb(8, 0, 126); */
 }
 
 /* #bottom-hud {
