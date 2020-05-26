@@ -1,6 +1,7 @@
 const Session = require("./session")
 const GAMEHEIGHT = 400
 const GAMEWIDTH = 1200
+import css from '../css/style.css';
 
 document.addEventListener("DOMContentLoaded", () => {
     let canvasEl = document.getElementById("canvas");
@@ -8,9 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     canvasEl.height = GAMEHEIGHT;
 
     const ctx = canvas.getContext('2d');
-    session = new Session(ctx);
+    let session = new Session(ctx);
     session.play();
-
-
-
 })

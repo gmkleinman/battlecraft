@@ -41,7 +41,7 @@ class Game {
             vel = [-1,0]
         }
 
-        if( player.spend(1000) ) {
+        if( player.spend(100) ) {
             //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
                 this.units.push(new Unit({
@@ -228,8 +228,8 @@ class Game {
     setup() {
         this.createBases();
         this.createPlayers();
-        this.createArmy(this.players[0], 'cat');
-        this.createArmy(this.players[1], 'blob');
+        // this.createArmy(this.players[0], 'cat');
+        // this.createArmy(this.players[1], 'blob');
         document.getElementById("spawnCat").onclick = () => { 
             this.createArmy(this.players[0], 'cat');
         } 

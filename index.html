@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,16 +7,32 @@
         <title>BattleCraft</title>
     </head>
     <body>
-        <div>
-            Level: 
-            <span id='level'>if you can see this, it's not working</span>
-            Player 1 | Pointy Sticks: 
-            <span id='sticks'>bad text</span>
-            <span id='not-enough-sticks'></span><br>
+        <div id='container'>
+            <div id='game'>
+                <div class='hud'>
+                    <div id='header-text'>
+                        <span>
+                            POINTY STICKS:
+                            <span id='sticks'>0</span>
+                        </span>
+                        <span id='not-enough-sticks'></span>
+                        <span>
+                            LEVEL: 
+                            <span id='level'>0</span>
+                        </span>
+                    </div>
+                </div>
+
+                <canvas id='canvas'></canvas>
+
+                <div class='hud'>
+                    <div id='header-text'>
+                        <button id='spawnCat'>RECRUIT FOREST DEFENDER (100) </button>
+                        <button id='spawnBlob'>SPAWN BLOB</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <canvas id='canvas'></canvas><br>
-        <button id='spawnCat'>SPAWN CAT ($1000)</button><br>
-        <button id='spawnBlob'>SPAWN BLOB</button><br>
 
         <script type='application/javascript' src='./dist/bundle.js'></script>
     </body>

@@ -24,16 +24,30 @@ class Session {
 
     play() {
         this.setup();
-
         this.gamePlay = setInterval(() => {
-            this.renderLevelInfo();
-            this.game.play()
-            this.checkGameEnd();
-            if(this.nextLevel === true) this.loadNextLevel();
-            if(this.reset === true) this.resetGame();
-        }, 4)
+            if (this.level === 0) {
+                this.renderStartScreen();
+                this.enableNextLevel();
+                if(this.nextLevel === true) this.loadNextLevel();
+            } else {
+                this.renderLevelInfo();
+                this.game.play()
+                this.checkGameEnd();
+                if(this.nextLevel === true) this.loadNextLevel();
+                if(this.reset === true) this.resetGame();
+            }
+            
+        }, 17)
+    }
 
-        //clearInterval(gamePlay) -> for game over
+    renderStartScreen() {
+        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
+        this.ctx.font = "900 30px Arial";
+        this.ctx.fillText("RECRUIT WILDLIFE", 100, 85);        
+        this.ctx.fillText("DEFEND NATURE", 450, 85);        
+        this.ctx.fillText("DESTROY OIL RIGS", 800, 85);        
+        this.ctx.font = "50px Arial";
+        this.ctx.fillText("CLICK TO START!", MAX_X/2-225, MAX_Y/2+20);        
     }
 
     checkGameEnd() {
@@ -48,7 +62,7 @@ class Session {
     }
 
     loadNextLevel() {
-        this.level += 1;
+        // this.level += 1;
         clearInterval(this.gamePlay);
         this.nextLevel = false;
         this.play();
@@ -66,6 +80,7 @@ class Session {
     enableNextLevel() {
         document.getElementById("canvas").onclick = () => { 
             this.nextLevel = true;
+            this.level += 1;
         } 
     }
 
@@ -82,14 +97,14 @@ class Session {
     renderWin() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.ctx.font = "30px Arial";
-        this.ctx.fillText(`You win! Click anywhere to go to level ${this.level + 1}.`, 10, 50);
+        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}.`, 10, 50);
         this.game.players[0].income = 0;
     }
 
     renderLoss() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.ctx.font = "30px Arial";
-        this.ctx.fillText("You lose :( Click anywhere to reset.", 10, 50);
+        this.ctx.fillText("YOU LOSE :( CLICK TO RESET", 10, 50);
         this.game.players[0].income = 0;
     }
 
