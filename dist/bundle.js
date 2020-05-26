@@ -263,11 +263,13 @@ const MIN_Y = 0;
 const MAX_Y = 400;
 
 class Game {
-    constructor(ctx) {
+    constructor(ctx, level) {
         this.ctx = ctx;
         this.units = [];
         this.projectiles = [];
         this.players = [];
+        this.level = level;
+        this.baseDestroyed;
     }
 
     createPlayers() {
@@ -295,6 +297,7 @@ class Game {
         }
 
         if( player.spend(1000) ) {
+            //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
                 this.units.push(new Unit({
                     pos: [startPos + Math.random()*50,i],
@@ -303,8 +306,14 @@ class Game {
                     type,
                 }));        
             } 
+        } else {
+            //display not enough $ message
+            let lowSticks = document.getElementById('not-enough-sticks')
+            if(lowSticks.innerHTML != 'NOT ENOUGH STICKS') {
+                lowSticks.innerHTML = 'NOT ENOUGH STICKS';
+                setTimeout(() => lowSticks.innerHTML = '', 3000)
+            }   
         }
-
     }
 
     drawArena() {
@@ -405,7 +414,11 @@ class Game {
         for (let i = 0; i < this.units.length; i++) {
             let unit = this.units[i];
             if (unit.hp <= 0) {
-                this.units.splice(i,1)
+                if(i === 0 || i === 1) {
+                    this.baseDestroyed = i;
+                } else {
+                    this.units.splice(i,1)
+                }
             }
         }
     }
@@ -463,27 +476,36 @@ class Game {
         })
     }
 
-    renderGold() {
-        document.getElementById('gold').innerHTML = `${this.players[0].gold}`
+    renderStickAmount() {
+        document.getElementById('sticks').innerHTML = `${this.players[0].sticks}`
     }
 
-    start() {
+    setup() {
+        this.createBases();
         this.createPlayers();
         this.createArmy(this.players[0], 'cat');
         this.createArmy(this.players[1], 'blob');
-        this.createBases();
-
-        setInterval(() => {
-            this.drawAll();
-            this.moveUnits();
-            this.moveProjectiles();
-            this.checkProjectileCollisions();
-            this.checkEliminations();
-            this.ensureInBounds();
-            this.giveIncome();
-            this.renderGold();
-        }, 17) //17 is "standard" speed
+        document.getElementById("spawnCat").onclick = () => { 
+            this.createArmy(this.players[0], 'cat');
+        } 
+    
+        document.getElementById("spawnBlob").onclick = () => { 
+            this.createArmy(this.players[1], 'blob');
+        } 
     }
+
+    play() {
+        this.drawAll();
+        this.moveUnits();
+        this.moveProjectiles();
+        this.checkProjectileCollisions();
+        this.checkEliminations();
+        this.ensureInBounds();
+        this.giveIncome();
+        this.renderStickAmount();
+    }
+
+
 }
 
 module.exports = Game;
@@ -497,26 +519,20 @@ module.exports = Game;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Game = __webpack_require__(/*! ./game */ "./src/game.js")
+const Session = __webpack_require__(/*! ./session */ "./src/session.js")
 const GAMEHEIGHT = 400
 const GAMEWIDTH = 1200
 
 document.addEventListener("DOMContentLoaded", () => {
-    const canvasEl = document.getElementById("canvas");
+    let canvasEl = document.getElementById("canvas");
     canvasEl.width = GAMEWIDTH;
     canvasEl.height = GAMEHEIGHT;
 
     const ctx = canvas.getContext('2d');
-    game = new Game(ctx);
-    game.start();
+    session = new Session(ctx);
+    session.play();
 
-    document.getElementById("spawnCat").onclick = () => { 
-        game.createArmy(game.players[0], 'cat');
-    } 
 
-    document.getElementById("spawnBlob").onclick = () => { 
-        game.createArmy(game.players[1], 'blob');
-    } 
 
 })
 
@@ -533,19 +549,19 @@ document.addEventListener("DOMContentLoaded", () => {
 class Player {
     constructor(team) {
         this.team = team;
-        this.gold = 1000;
-        this.income = 100;
+        this.sticks = 999999;
+        this.income = 50;
         this.incomeTimer = 0;
-        this.incomeCooldown = 100;
+        this.incomeCooldown = 50;
 
         if (team === 'red') {
-            this.gold = 999999999;
+            this.sticks = 999999999;
         }
     }
 
     spend(amt) {
-        if(this.gold >= amt) {
-            this.gold -= amt;
+        if(this.sticks >= amt) {
+            this.sticks -= amt;
             return true;
         } else {
             return false;
@@ -554,7 +570,7 @@ class Player {
 
     earn() {
         if(this.incomeTimer > this.incomeCooldown) {
-            this.gold += this.income;
+            this.sticks += this.income;
             this.incomeTimer = 0;
         }
         else {
@@ -601,6 +617,115 @@ class Projectile {
 }
 
 module.exports = Projectile;
+
+/***/ }),
+
+/***/ "./src/session.js":
+/*!************************!*\
+  !*** ./src/session.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Game = __webpack_require__(/*! ./game */ "./src/game.js");
+
+const MIN_X = 0;
+const MAX_X = 1200;
+const MIN_Y = 0;
+const MAX_Y = 400;
+
+class Session {
+    constructor(ctx) {
+        this.ctx = ctx;
+        this.level = 0;
+        this.game;
+        this.done = false;
+        this.nextLevel = false;
+        this.reset = false;
+    }
+
+    setup() {
+        this.game = new Game(this.ctx, this.level)
+        this.game.setup();
+        this.disableCanvasClick();
+    }
+
+    play() {
+        this.setup();
+
+        const gamePlay = setInterval(() => {
+            this.renderLevelInfo();
+            this.game.play()
+            this.checkGameEnd();
+            if(this.nextLevel === true) this.enableNextLevel();
+            if(this.reset === true) this.resetGame();
+        }, 4)
+
+        //clearInterval(gamePlay) -> for game over
+    }
+
+    checkGameEnd() {
+        if(this.game.baseDestroyed === 0) {
+            this.renderLoss()
+            this.enableReset()
+            
+        } else if(this.game.baseDestroyed === 1) {
+            this.renderWin()
+            this.enableNextLevel()
+        }
+    }
+
+    nextLevel() {
+        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
+        this.ctx.font = "30px Arial";
+        this.ctx.fillText("Next level!", 10, 50);
+        this.level += 1;
+        //remember to reset this flag
+        this.disableCanvasClick();
+    }
+
+    resetGame() {
+        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
+        this.ctx.font = "30px Arial";
+        this.ctx.fillText("Next level!", 10, 50);
+        this.reset = false;
+        this.setup();
+    }
+
+    enableNextLevel() {
+        document.getElementById("canvas").onclick = () => { 
+            this.nextLevel = true;
+        } 
+    }
+
+    enableReset() {
+        document.getElementById("canvas").onclick = () => { 
+            this.reset = true;
+        } 
+    }
+
+    disableCanvasClick() {
+        document.getElementById("canvas").onclick = null;
+    }
+
+    renderWin() {
+        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
+        this.ctx.font = "30px Arial";
+        this.ctx.fillText("You win! Click anywhere to go to next level", 10, 50);
+    }
+
+    renderLoss() {
+        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
+        this.ctx.font = "30px Arial";
+        this.ctx.fillText("You lose :( Click anywhere to reset.", 10, 50);
+    }
+
+    renderLevelInfo() {
+        document.getElementById('level').innerHTML = `${this.level}`
+    }
+}
+
+module.exports = Session;
 
 /***/ }),
 

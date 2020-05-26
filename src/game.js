@@ -8,11 +8,13 @@ const MIN_Y = 0;
 const MAX_Y = 400;
 
 class Game {
-    constructor(ctx) {
+    constructor(ctx, level) {
         this.ctx = ctx;
         this.units = [];
         this.projectiles = [];
         this.players = [];
+        this.level = level;
+        this.baseDestroyed;
     }
 
     createPlayers() {
@@ -40,6 +42,7 @@ class Game {
         }
 
         if( player.spend(1000) ) {
+            //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
                 this.units.push(new Unit({
                     pos: [startPos + Math.random()*50,i],
@@ -48,8 +51,14 @@ class Game {
                     type,
                 }));        
             } 
+        } else {
+            //display not enough $ message
+            let lowSticks = document.getElementById('not-enough-sticks')
+            if(lowSticks.innerHTML != 'NOT ENOUGH STICKS') {
+                lowSticks.innerHTML = 'NOT ENOUGH STICKS';
+                setTimeout(() => lowSticks.innerHTML = '', 3000)
+            }   
         }
-
     }
 
     drawArena() {
@@ -150,7 +159,11 @@ class Game {
         for (let i = 0; i < this.units.length; i++) {
             let unit = this.units[i];
             if (unit.hp <= 0) {
-                this.units.splice(i,1)
+                if(i === 0 || i === 1) {
+                    this.baseDestroyed = i;
+                } else {
+                    this.units.splice(i,1)
+                }
             }
         }
     }
@@ -208,27 +221,36 @@ class Game {
         })
     }
 
-    renderGold() {
-        document.getElementById('gold').innerHTML = `${this.players[0].gold}`
+    renderStickAmount() {
+        document.getElementById('sticks').innerHTML = `${this.players[0].sticks}`
     }
 
-    start() {
+    setup() {
+        this.createBases();
         this.createPlayers();
         this.createArmy(this.players[0], 'cat');
         this.createArmy(this.players[1], 'blob');
-        this.createBases();
-
-        setInterval(() => {
-            this.drawAll();
-            this.moveUnits();
-            this.moveProjectiles();
-            this.checkProjectileCollisions();
-            this.checkEliminations();
-            this.ensureInBounds();
-            this.giveIncome();
-            this.renderGold();
-        }, 17) //17 is "standard" speed
+        document.getElementById("spawnCat").onclick = () => { 
+            this.createArmy(this.players[0], 'cat');
+        } 
+    
+        document.getElementById("spawnBlob").onclick = () => { 
+            this.createArmy(this.players[1], 'blob');
+        } 
     }
+
+    play() {
+        this.drawAll();
+        this.moveUnits();
+        this.moveProjectiles();
+        this.checkProjectileCollisions();
+        this.checkEliminations();
+        this.ensureInBounds();
+        this.giveIncome();
+        this.renderStickAmount();
+    }
+
+
 }
 
 module.exports = Game;

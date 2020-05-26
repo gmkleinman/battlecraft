@@ -1,19 +1,19 @@
 class Player {
     constructor(team) {
         this.team = team;
-        this.gold = 1000;
-        this.income = 100;
+        this.sticks = 999999;
+        this.income = 50;
         this.incomeTimer = 0;
-        this.incomeCooldown = 100;
+        this.incomeCooldown = 50;
 
         if (team === 'red') {
-            this.gold = 999999999;
+            this.sticks = 999999999;
         }
     }
 
     spend(amt) {
-        if(this.gold >= amt) {
-            this.gold -= amt;
+        if(this.sticks >= amt) {
+            this.sticks -= amt;
             return true;
         } else {
             return false;
@@ -22,7 +22,7 @@ class Player {
 
     earn() {
         if(this.incomeTimer > this.incomeCooldown) {
-            this.gold += this.income;
+            this.sticks += this.income;
             this.incomeTimer = 0;
         }
         else {
