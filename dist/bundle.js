@@ -639,6 +639,7 @@ class Session {
         this.ctx = ctx;
         this.level = 0;
         this.game;
+        this.gamePlay;
         this.done = false;
         this.nextLevel = false;
         this.reset = false;
@@ -653,11 +654,11 @@ class Session {
     play() {
         this.setup();
 
-        const gamePlay = setInterval(() => {
+        this.gamePlay = setInterval(() => {
             this.renderLevelInfo();
             this.game.play()
             this.checkGameEnd();
-            if(this.nextLevel === true) this.enableNextLevel();
+            if(this.nextLevel === true) this.loadNextLevel();
             if(this.reset === true) this.resetGame();
         }, 4)
 
@@ -675,13 +676,11 @@ class Session {
         }
     }
 
-    nextLevel() {
-        this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText("Next level!", 10, 50);
+    loadNextLevel() {
         this.level += 1;
-        //remember to reset this flag
-        this.disableCanvasClick();
+        clearInterval(this.gamePlay);
+        this.nextLevel = false;
+        this.play();
     }
 
     resetGame() {
@@ -689,6 +688,7 @@ class Session {
         this.ctx.font = "30px Arial";
         this.ctx.fillText("Next level!", 10, 50);
         this.reset = false;
+        this.level = 0;
         this.setup();
     }
 
@@ -711,13 +711,15 @@ class Session {
     renderWin() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.ctx.font = "30px Arial";
-        this.ctx.fillText("You win! Click anywhere to go to next level", 10, 50);
+        this.ctx.fillText(`You win! Click anywhere to go to level ${this.level + 1}.`, 10, 50);
+        this.game.players[0].income = 0;
     }
 
     renderLoss() {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.ctx.font = "30px Arial";
         this.ctx.fillText("You lose :( Click anywhere to reset.", 10, 50);
+        this.game.players[0].income = 0;
     }
 
     renderLevelInfo() {
