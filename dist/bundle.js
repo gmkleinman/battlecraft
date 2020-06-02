@@ -86,6 +86,50 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./assets/alien1.png":
+/*!***************************!*\
+  !*** ./assets/alien1.png ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "96b03681ba084207df899cc040e87c40.png";
+
+/***/ }),
+
+/***/ "./assets/alien2.png":
+/*!***************************!*\
+  !*** ./assets/alien2.png ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "01bbc0dece97c2fb1e6122451804d527.png";
+
+/***/ }),
+
+/***/ "./assets/alien3.png":
+/*!***************************!*\
+  !*** ./assets/alien3.png ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "23c75eb1cdedc551d1e0e76803aea2c1.png";
+
+/***/ }),
+
+/***/ "./assets/alienproj.png":
+/*!******************************!*\
+  !*** ./assets/alienproj.png ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "6c24069235ea6716e69279b7253d4ad6.png";
+
+/***/ }),
+
 /***/ "./assets/blob1.png":
 /*!**************************!*\
   !*** ./assets/blob1.png ***!
@@ -116,6 +160,17 @@ module.exports = __webpack_require__.p + "1b56b4d1e45440ad997445b637aa7985.png";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "4da03cea04ff485f442c814c507fac5c.png";
+
+/***/ }),
+
+/***/ "./assets/blobproj.png":
+/*!*****************************!*\
+  !*** ./assets/blobproj.png ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "c8ada7245aa454d18a7140d2e577f099.png";
 
 /***/ }),
 
@@ -152,14 +207,102 @@ module.exports = __webpack_require__.p + "b128e8f0e620cebcc2d30907d7889055.png";
 
 /***/ }),
 
-/***/ "./assets/hadoken1.png":
-/*!*****************************!*\
-  !*** ./assets/hadoken1.png ***!
-  \*****************************/
+/***/ "./assets/catproj.png":
+/*!****************************!*\
+  !*** ./assets/catproj.png ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "7fb4ec026a28fb69882b7a2cfec4d164.png";
+
+/***/ }),
+
+/***/ "./assets/frog1.png":
+/*!**************************!*\
+  !*** ./assets/frog1.png ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "ea1693113b85152eba5630d36231bdaf.png";
+
+/***/ }),
+
+/***/ "./assets/frog2.png":
+/*!**************************!*\
+  !*** ./assets/frog2.png ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "8ac02d99310a2d3bf7db15c88bd5e80c.png";
+
+/***/ }),
+
+/***/ "./assets/frog3.png":
+/*!**************************!*\
+  !*** ./assets/frog3.png ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "04f71d4f81f2a96f4a1b8cb5cf28e078.png";
+
+/***/ }),
+
+/***/ "./assets/frogproj.png":
+/*!*****************************!*\
+  !*** ./assets/frogproj.png ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "bbc13ff2de2c4424d18a403bdb8c93f2.png";
+
+/***/ }),
+
+/***/ "./assets/monk1.png":
+/*!**************************!*\
+  !*** ./assets/monk1.png ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "94ef4063c53d95665b5318d3b05290b7.png";
+
+/***/ }),
+
+/***/ "./assets/monk2.png":
+/*!**************************!*\
+  !*** ./assets/monk2.png ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "4a950262a2b00d6afc4134cc7cf50462.png";
+
+/***/ }),
+
+/***/ "./assets/monk3.png":
+/*!**************************!*\
+  !*** ./assets/monk3.png ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "608c1343fec7d93727001d6ea2cf25ec.png";
+
+/***/ }),
+
+/***/ "./assets/monkproj.png":
+/*!*****************************!*\
+  !*** ./assets/monkproj.png ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "cb7f73f59f962f164c4b4c39bdb2c182.png";
 
 /***/ }),
 
@@ -171,6 +314,50 @@ module.exports = __webpack_require__.p + "7fb4ec026a28fb69882b7a2cfec4d164.png";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "e20eb9907f931c3918d6144669c7e0a5.gif";
+
+/***/ }),
+
+/***/ "./assets/snake1.png":
+/*!***************************!*\
+  !*** ./assets/snake1.png ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "d960f959e207e9031e1f65797d641258.png";
+
+/***/ }),
+
+/***/ "./assets/snake2.png":
+/*!***************************!*\
+  !*** ./assets/snake2.png ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "83414a2aab6bcc04a66e94d438208271.png";
+
+/***/ }),
+
+/***/ "./assets/snake3.png":
+/*!***************************!*\
+  !*** ./assets/snake3.png ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "3380a4a8aadcbf3114f2fa0dbb92ff1f.png";
+
+/***/ }),
+
+/***/ "./assets/snakeproj.png":
+/*!******************************!*\
+  !*** ./assets/snakeproj.png ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "9c105558299f47daad2428bea61cb832.png";
 
 /***/ }),
 
@@ -617,6 +804,73 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./src/alien.js":
+/*!**********************!*\
+  !*** ./src/alien.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
+const alienUrl1 = __webpack_require__(/*! ../assets/alien1.png */ "./assets/alien1.png")
+const alienUrl2 = __webpack_require__(/*! ../assets/alien2.png */ "./assets/alien2.png")
+const alienUrl3 = __webpack_require__(/*! ../assets/alien3.png */ "./assets/alien3.png")
+
+const ANIMATE_FRAMES = 8;
+
+class Alien extends Unit{
+    constructor(obj) {
+        super(obj);
+        this.attackCooldown = 80;
+        this.timeBetweenAttacks = 100;
+        this.projectileType = 'alienProj';
+        this.hp = 3;
+        this.projectileSpeed = 6;
+    }
+    
+    draw(ctx) {
+        let alien = new Image();
+        if (this.moving === true) this.animationFrame += 1;
+        if(this.animationFrame < ANIMATE_FRAMES) {
+            alien.src = alienUrl1;
+        } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
+            alien.src = alienUrl2;
+        } else {
+            alien.src = alienUrl3;
+        }
+
+        if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
+
+        let x = this.pos[0];
+        let y = this.pos[1];
+        ctx.drawImage(alien, x, y, this.width, this.height);
+    }
+
+    attack(enemyPos) {
+        let vel = this.unitVector(this.pos,enemyPos);
+        vel[0] *= this.projectileSpeed;
+        vel[1] *= this.projectileSpeed;
+
+        if (this.attackCooldown >= this.timeBetweenAttacks) {
+            this.attackCooldown = 0;
+            let pos = this.pos.slice(0)
+            return new Projectile({
+                pos,
+                vel,
+                team: this.team,
+                type: this.projectileType,
+            })
+        } else {
+            this.attackCooldown += 1;
+            return null;
+        }    
+    }
+}
+module.exports = Alien;
+
+/***/ }),
+
 /***/ "./src/base.js":
 /*!*********************!*\
   !*** ./src/base.js ***!
@@ -686,15 +940,59 @@ module.exports = Base;
 /***/ (function(module, exports, __webpack_require__) {
 
 const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
+const blobUrl1 = __webpack_require__(/*! ../assets/blob1.png */ "./assets/blob1.png")
+const blobUrl2 = __webpack_require__(/*! ../assets/blob2.png */ "./assets/blob2.png")
+const blobUrl3 = __webpack_require__(/*! ../assets/blob3.png */ "./assets/blob3.png")
+
+const ANIMATE_FRAMES = 8;
 
 class Blob extends Unit{
     constructor(obj) {
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
-        this.projectile = 'hadoken';
+        this.projectileType = 'blobProj';
         this.hp = 3;
+        this.projectileSpeed = 6;
+    }
+    
+    draw(ctx) {
+        let blob = new Image();
+        if (this.moving === true) this.animationFrame += 1;
+        if(this.animationFrame < ANIMATE_FRAMES) {
+            blob.src = blobUrl1;
+        } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
+            blob.src = blobUrl2;
+        } else {
+            blob.src = blobUrl3;
+        }
 
+        if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
+
+        let x = this.pos[0];
+        let y = this.pos[1];
+        ctx.drawImage(blob, x, y, this.width, this.height);
+    }
+
+    attack(enemyPos) {
+        let vel = this.unitVector(this.pos,enemyPos);
+        vel[0] *= this.projectileSpeed;
+        vel[1] *= this.projectileSpeed;
+
+        if (this.attackCooldown >= this.timeBetweenAttacks) {
+            this.attackCooldown = 0;
+            let pos = this.pos.slice(0)
+            return new Projectile({
+                pos,
+                vel,
+                team: this.team,
+                type: this.projectileType,
+            })
+        } else {
+            this.attackCooldown += 1;
+            return null;
+        }    
     }
 }
 module.exports = Blob;
@@ -709,28 +1007,26 @@ module.exports = Blob;
 /***/ (function(module, exports, __webpack_require__) {
 
 const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
 const catUrl1 = __webpack_require__(/*! ../assets/cat1.png */ "./assets/cat1.png")
 const catUrl2 = __webpack_require__(/*! ../assets/cat2.png */ "./assets/cat2.png")
 const catUrl3 = __webpack_require__(/*! ../assets/cat3.png */ "./assets/cat3.png")
 
 const ANIMATE_FRAMES = 8;
 
-
 class Cat extends Unit{
     constructor(obj) {
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
-        this.projectile = 'hadoken';
+        this.projectileType = 'catProj';
         this.hp = 3;
-
+        this.projectileSpeed = 3;
     }
 
     draw(ctx) {
         let cat = new Image();
-        
         if (this.moving === true) this.animationFrame += 1;
-
         if(this.animationFrame < ANIMATE_FRAMES) {
             cat.src = catUrl1;
         } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
@@ -745,8 +1041,95 @@ class Cat extends Unit{
         let y = this.pos[1];
         ctx.drawImage(cat, x, y, this.width, this.height);
     }
+
+    attack(enemyPos) {
+        let vel = this.unitVector(this.pos,enemyPos);
+        vel[0] *= this.projectileSpeed;
+        vel[1] *= this.projectileSpeed;
+
+        if (this.attackCooldown >= this.timeBetweenAttacks) {
+            this.attackCooldown = 0;
+            let pos = this.pos.slice(0)
+            return new Projectile({
+                pos,
+                vel,
+                team: this.team,
+                type: this.projectileType,
+            })
+        } else {
+            this.attackCooldown += 1;
+            return null;
+        }    
+    }
 }
 module.exports = Cat;
+
+/***/ }),
+
+/***/ "./src/frog.js":
+/*!*********************!*\
+  !*** ./src/frog.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
+const frogUrl1 = __webpack_require__(/*! ../assets/frog1.png */ "./assets/frog1.png")
+const frogUrl2 = __webpack_require__(/*! ../assets/frog2.png */ "./assets/frog2.png")
+const frogUrl3 = __webpack_require__(/*! ../assets/frog3.png */ "./assets/frog3.png")
+
+const ANIMATE_FRAMES = 8;
+
+class Frog extends Unit{
+    constructor(obj) {
+        super(obj);
+        this.attackCooldown = 80;
+        this.timeBetweenAttacks = 100;
+        this.projectileType = 'frogProj';
+        this.hp = 3;
+        this.projectileSpeed = 6;
+    }
+    
+    draw(ctx) {
+        let frog = new Image();
+        if (this.moving === true) this.animationFrame += 1;
+        if(this.animationFrame < ANIMATE_FRAMES) {
+            frog.src = frogUrl1;
+        } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
+            frog.src = frogUrl2;
+        } else {
+            frog.src = frogUrl3;
+        }
+
+        if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
+
+        let x = this.pos[0];
+        let y = this.pos[1];
+        ctx.drawImage(frog, x, y, this.width, this.height);
+    }
+
+    attack(enemyPos) {
+        let vel = this.unitVector(this.pos,enemyPos);
+        vel[0] *= this.projectileSpeed;
+        vel[1] *= this.projectileSpeed;
+
+        if (this.attackCooldown >= this.timeBetweenAttacks) {
+            this.attackCooldown = 0;
+            let pos = this.pos.slice(0)
+            return new Projectile({
+                pos,
+                vel,
+                team: this.team,
+                type: this.projectileType,
+            })
+        } else {
+            this.attackCooldown += 1;
+            return null;
+        }    
+    }
+}
+module.exports = Frog;
 
 /***/ }),
 
@@ -757,11 +1140,14 @@ module.exports = Cat;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
 const Base = __webpack_require__(/*! ./base */ "./src/base.js")
 const Player = __webpack_require__(/*! ./player */ "./src/player.js")
 const Cat = __webpack_require__(/*! ./cat */ "./src/cat.js")
 const Blob = __webpack_require__(/*! ./blob */ "./src/blob.js")
+const Alien = __webpack_require__(/*! ./alien */ "./src/alien.js")
+const Frog = __webpack_require__(/*! ./frog */ "./src/frog.js")
+const Monk = __webpack_require__(/*! ./monk */ "./src/monk.js")
+const Snake = __webpack_require__(/*! ./snake */ "./src/snake.js")
 
 const MIN_X = 0;
 const MAX_X = 1200;
@@ -803,8 +1189,6 @@ class Game {
             vel = [-1,0]
         }
 
-
-
         if( player.spend(100) ) {
             //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
@@ -813,13 +1197,25 @@ class Game {
                     vel,
                     team: player.team,
                 }
-                
+
                 switch (type) {
                     case 'cat':
                         this.units.push(new Cat(unitProps));                          
                         break;
                     case 'blob':
                         this.units.push(new Blob(unitProps));   
+                        break;
+                    case 'alien':
+                        this.units.push(new Alien(unitProps));   
+                        break;
+                    case 'monk':
+                        this.units.push(new Monk(unitProps));   
+                        break;
+                    case 'snake':
+                        this.units.push(new Snake(unitProps));   
+                        break;
+                    case 'frog':
+                        this.units.push(new Frog(unitProps));   
                         break;
                     default:
                         break;
@@ -961,7 +1357,6 @@ class Game {
     }
     
     moveUnits() {
-        //this is horrible brute force - should optimize later, esp. if performance issues
         this.units.forEach(unit => {
             let target = this.acquireTarget(unit)
             if(target === 'enemy') {
@@ -1008,6 +1403,7 @@ class Game {
             this.createArmy(this.players[0], 'cat');
         } 
         this.spawnTimer = 700;
+        // testing button below:
         // document.getElementById("spawnBlob").onclick = () => { 
         //     this.createArmy(this.players[1], 'blob');
         // } 
@@ -1068,6 +1464,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /***/ }),
 
+/***/ "./src/monk.js":
+/*!*********************!*\
+  !*** ./src/monk.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
+const monkUrl1 = __webpack_require__(/*! ../assets/monk1.png */ "./assets/monk1.png")
+const monkUrl2 = __webpack_require__(/*! ../assets/monk2.png */ "./assets/monk2.png")
+const monkUrl3 = __webpack_require__(/*! ../assets/monk3.png */ "./assets/monk3.png")
+
+const ANIMATE_FRAMES = 8;
+
+class Monk extends Unit{
+    constructor(obj) {
+        super(obj);
+        this.attackCooldown = 80;
+        this.timeBetweenAttacks = 100;
+        this.projectileType = 'monkProj';
+        this.hp = 3;
+        this.projectileSpeed = 6;
+    }
+    
+    draw(ctx) {
+        let monk = new Image();
+        if (this.moving === true) this.animationFrame += 1;
+        if(this.animationFrame < ANIMATE_FRAMES) {
+            monk.src = monkUrl1;
+        } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
+            monk.src = monkUrl2;
+        } else {
+            monk.src = monkUrl3;
+        }
+
+        if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
+
+        let x = this.pos[0];
+        let y = this.pos[1];
+        ctx.drawImage(monk, x, y, this.width, this.height);
+    }
+
+    attack(enemyPos) {
+        let vel = this.unitVector(this.pos,enemyPos);
+        vel[0] *= this.projectileSpeed;
+        vel[1] *= this.projectileSpeed;
+
+        if (this.attackCooldown >= this.timeBetweenAttacks) {
+            this.attackCooldown = 0;
+            let pos = this.pos.slice(0)
+            return new Projectile({
+                pos,
+                vel,
+                team: this.team,
+                type: this.projectileType,
+            })
+        } else {
+            this.attackCooldown += 1;
+            return null;
+        }    
+    }
+}
+module.exports = Monk;
+
+/***/ }),
+
 /***/ "./src/player.js":
 /*!***********************!*\
   !*** ./src/player.js ***!
@@ -1119,24 +1582,54 @@ module.exports = Player;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const hadokenUrl = __webpack_require__(/*! ../assets/hadoken1.png */ "./assets/hadoken1.png")
+const catProjUrl = __webpack_require__(/*! ../assets/catproj.png */ "./assets/catproj.png")
+const blobProjUrl = __webpack_require__(/*! ../assets/blobproj.png */ "./assets/blobproj.png")
+const frogProjUrl = __webpack_require__(/*! ../assets/frogproj.png */ "./assets/frogproj.png")
+const alienProjUrl = __webpack_require__(/*! ../assets/alienproj.png */ "./assets/alienproj.png")
+const snakeProjUrl = __webpack_require__(/*! ../assets/snakeproj.png */ "./assets/snakeproj.png")
+const monkProjUrl = __webpack_require__(/*! ../assets/monkproj.png */ "./assets/monkproj.png")
 
 class Projectile {
     constructor(obj) {
         this.pos = obj.pos;
         this.vel = obj.vel;
         this.team = obj.team;
-        this.width = 50;
-        this.height = 50;
+        this.type = obj.type;
+        this.unitType = obj.unitType;
+        this.width = 35;
+        this.height = 35;
         this.damage = 1;
     }
 
     draw(ctx) {
-        let hadoken = new Image();
-        hadoken.src = hadokenUrl;
         let x = this.pos[0];
         let y = this.pos[1];
-        ctx.drawImage(hadoken, x, y, this.width, this.height)
+        let proj = new Image();
+
+        switch (this.type) {
+            case 'catProj':
+                proj.src = catProjUrl;
+                break;
+            case 'blobProj':
+                proj.src = blobProjUrl;
+                break;
+            case 'monkProj':
+                proj.src = monkProjUrl;
+                break;
+            case 'frogProj':
+                proj.src = frogProjUrl;
+                break;
+            case 'alienProj':
+                proj.src = alienProjUrl;
+                break;
+            case 'snakeProj':
+                proj.src = snakeProjUrl;
+                break;
+            default:
+                break;
+        }
+
+        ctx.drawImage(proj, x, y, this.width, this.height)
     }
 
     move() {
@@ -1275,6 +1768,73 @@ module.exports = Session;
 
 /***/ }),
 
+/***/ "./src/snake.js":
+/*!**********************!*\
+  !*** ./src/snake.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
+const snakeUrl1 = __webpack_require__(/*! ../assets/snake1.png */ "./assets/snake1.png")
+const snakeUrl2 = __webpack_require__(/*! ../assets/snake2.png */ "./assets/snake2.png")
+const snakeUrl3 = __webpack_require__(/*! ../assets/snake3.png */ "./assets/snake3.png")
+
+const ANIMATE_FRAMES = 8;
+
+class Snake extends Unit{
+    constructor(obj) {
+        super(obj);
+        this.attackCooldown = 80;
+        this.timeBetweenAttacks = 100;
+        this.projectileType = 'snakeProj';
+        this.hp = 3;
+        this.projectileSpeed = 6;
+    }
+    
+    draw(ctx) {
+        let snake = new Image();
+        if (this.moving === true) this.animationFrame += 1;
+        if(this.animationFrame < ANIMATE_FRAMES) {
+            snake.src = snakeUrl1;
+        } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
+            snake.src = snakeUrl2;
+        } else {
+            snake.src = snakeUrl3;
+        }
+
+        if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
+
+        let x = this.pos[0];
+        let y = this.pos[1];
+        ctx.drawImage(snake, x, y, this.width, this.height);
+    }
+
+    attack(enemyPos) {
+        let vel = this.unitVector(this.pos,enemyPos);
+        vel[0] *= this.projectileSpeed;
+        vel[1] *= this.projectileSpeed;
+
+        if (this.attackCooldown >= this.timeBetweenAttacks) {
+            this.attackCooldown = 0;
+            let pos = this.pos.slice(0)
+            return new Projectile({
+                pos,
+                vel,
+                team: this.team,
+                type: this.projectileType,
+            })
+        } else {
+            this.attackCooldown += 1;
+            return null;
+        }    
+    }
+}
+module.exports = Snake;
+
+/***/ }),
+
 /***/ "./src/unit.js":
 /*!*********************!*\
   !*** ./src/unit.js ***!
@@ -1282,10 +1842,6 @@ module.exports = Session;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-const blobUrl1 = __webpack_require__(/*! ../assets/blob1.png */ "./assets/blob1.png")
-const blobUrl2 = __webpack_require__(/*! ../assets/blob2.png */ "./assets/blob2.png")
-const blobUrl3 = __webpack_require__(/*! ../assets/blob3.png */ "./assets/blob3.png")
 const Projectile = __webpack_require__(/*! ./projectile */ "./src/projectile.js");
 
 const ANIMATE_FRAMES = 8;

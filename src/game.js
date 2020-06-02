@@ -1,8 +1,11 @@
-const Unit = require("./unit");
 const Base = require('./base')
 const Player = require('./player')
 const Cat = require('./cat')
 const Blob = require('./blob')
+const Alien = require('./alien')
+const Frog = require('./frog')
+const Monk = require('./monk')
+const Snake = require('./snake')
 
 const MIN_X = 0;
 const MAX_X = 1200;
@@ -44,8 +47,6 @@ class Game {
             vel = [-1,0]
         }
 
-
-
         if( player.spend(100) ) {
             //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
@@ -54,13 +55,25 @@ class Game {
                     vel,
                     team: player.team,
                 }
-                
+
                 switch (type) {
                     case 'cat':
                         this.units.push(new Cat(unitProps));                          
                         break;
                     case 'blob':
                         this.units.push(new Blob(unitProps));   
+                        break;
+                    case 'alien':
+                        this.units.push(new Alien(unitProps));   
+                        break;
+                    case 'monk':
+                        this.units.push(new Monk(unitProps));   
+                        break;
+                    case 'snake':
+                        this.units.push(new Snake(unitProps));   
+                        break;
+                    case 'frog':
+                        this.units.push(new Frog(unitProps));   
                         break;
                     default:
                         break;
@@ -202,7 +215,6 @@ class Game {
     }
     
     moveUnits() {
-        //this is horrible brute force - should optimize later, esp. if performance issues
         this.units.forEach(unit => {
             let target = this.acquireTarget(unit)
             if(target === 'enemy') {
@@ -249,6 +261,7 @@ class Game {
             this.createArmy(this.players[0], 'cat');
         } 
         this.spawnTimer = 700;
+        // testing button below:
         // document.getElementById("spawnBlob").onclick = () => { 
         //     this.createArmy(this.players[1], 'blob');
         // } 

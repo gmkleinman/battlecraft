@@ -1,37 +1,37 @@
 const Unit = require("./unit");
 const Projectile = require("./projectile");
-const catUrl1 = require("../assets/cat1.png")
-const catUrl2 = require("../assets/cat2.png")
-const catUrl3 = require("../assets/cat3.png")
+const alienUrl1 = require("../assets/alien1.png")
+const alienUrl2 = require("../assets/alien2.png")
+const alienUrl3 = require("../assets/alien3.png")
 
 const ANIMATE_FRAMES = 8;
 
-class Cat extends Unit{
+class Alien extends Unit{
     constructor(obj) {
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
-        this.projectileType = 'catProj';
+        this.projectileType = 'alienProj';
         this.hp = 3;
-        this.projectileSpeed = 3;
+        this.projectileSpeed = 6;
     }
-
+    
     draw(ctx) {
-        let cat = new Image();
+        let alien = new Image();
         if (this.moving === true) this.animationFrame += 1;
         if(this.animationFrame < ANIMATE_FRAMES) {
-            cat.src = catUrl1;
+            alien.src = alienUrl1;
         } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
-            cat.src = catUrl2;
+            alien.src = alienUrl2;
         } else {
-            cat.src = catUrl3;
+            alien.src = alienUrl3;
         }
 
         if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
 
         let x = this.pos[0];
         let y = this.pos[1];
-        ctx.drawImage(cat, x, y, this.width, this.height);
+        ctx.drawImage(alien, x, y, this.width, this.height);
     }
 
     attack(enemyPos) {
@@ -54,4 +54,4 @@ class Cat extends Unit{
         }    
     }
 }
-module.exports = Cat;
+module.exports = Alien;

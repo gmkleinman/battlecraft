@@ -1,7 +1,3 @@
-
-const blobUrl1 = require("../assets/blob1.png")
-const blobUrl2 = require("../assets/blob2.png")
-const blobUrl3 = require("../assets/blob3.png")
 const Projectile = require("./projectile");
 
 const ANIMATE_FRAMES = 8;
