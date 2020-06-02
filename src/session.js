@@ -37,7 +37,7 @@ class Session {
                 if(this.reset === true) this.resetGame();
             }
             
-        }, 17) //17 is 60FPS
+        }, 4) //17 is 60FPS
     }
 
     renderStartScreen() {

@@ -678,6 +678,78 @@ module.exports = Base;
 
 /***/ }),
 
+/***/ "./src/blob.js":
+/*!*********************!*\
+  !*** ./src/blob.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+
+class Blob extends Unit{
+    constructor(obj) {
+        super(obj);
+        this.attackCooldown = 80;
+        this.timeBetweenAttacks = 100;
+        this.projectile = 'hadoken';
+        this.hp = 3;
+
+    }
+}
+module.exports = Blob;
+
+/***/ }),
+
+/***/ "./src/cat.js":
+/*!********************!*\
+  !*** ./src/cat.js ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
+const catUrl1 = __webpack_require__(/*! ../assets/cat1.png */ "./assets/cat1.png")
+const catUrl2 = __webpack_require__(/*! ../assets/cat2.png */ "./assets/cat2.png")
+const catUrl3 = __webpack_require__(/*! ../assets/cat3.png */ "./assets/cat3.png")
+
+const ANIMATE_FRAMES = 8;
+
+
+class Cat extends Unit{
+    constructor(obj) {
+        super(obj);
+        this.attackCooldown = 80;
+        this.timeBetweenAttacks = 100;
+        this.projectile = 'hadoken';
+        this.hp = 3;
+
+    }
+
+    draw(ctx) {
+        let cat = new Image();
+        
+        if (this.moving === true) this.animationFrame += 1;
+
+        if(this.animationFrame < ANIMATE_FRAMES) {
+            cat.src = catUrl1;
+        } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
+            cat.src = catUrl2;
+        } else {
+            cat.src = catUrl3;
+        }
+
+        if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
+
+        let x = this.pos[0];
+        let y = this.pos[1];
+        ctx.drawImage(cat, x, y, this.width, this.height);
+    }
+}
+module.exports = Cat;
+
+/***/ }),
+
 /***/ "./src/game.js":
 /*!*********************!*\
   !*** ./src/game.js ***!
@@ -688,6 +760,8 @@ module.exports = Base;
 const Unit = __webpack_require__(/*! ./unit */ "./src/unit.js");
 const Base = __webpack_require__(/*! ./base */ "./src/base.js")
 const Player = __webpack_require__(/*! ./player */ "./src/player.js")
+const Cat = __webpack_require__(/*! ./cat */ "./src/cat.js")
+const Blob = __webpack_require__(/*! ./blob */ "./src/blob.js")
 
 const MIN_X = 0;
 const MAX_X = 1200;
@@ -729,23 +803,37 @@ class Game {
             vel = [-1,0]
         }
 
+
+
         if( player.spend(100) ) {
             //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
-                this.units.push(new Unit({
+                let unitProps = {
                     pos: [startPos + Math.random()*50,i],
                     vel,
                     team: player.team,
-                    type,
-                }));        
+                }
+                
+                switch (type) {
+                    case 'cat':
+                        this.units.push(new Cat(unitProps));                          
+                        break;
+                    case 'blob':
+                        this.units.push(new Blob(unitProps));   
+                        break;
+                    default:
+                        break;
+                }
+     
             } 
-        } else {
-            //display not enough $ message
-            let lowSticks = document.getElementById('not-enough-sticks')
-            if(lowSticks.innerHTML != 'NOT ENOUGH STICKS') {
-                lowSticks.innerHTML = 'NOT ENOUGH STICKS';
-                setTimeout(() => lowSticks.innerHTML = '', 3000)
-            }   
+        } else this.displayLowSticks();
+    }
+
+    displayLowSticks() {
+        let lowSticks = document.getElementById('not-enough-sticks')
+        if(lowSticks.innerHTML != 'NOT ENOUGH STICKS') {
+            lowSticks.innerHTML = 'NOT ENOUGH STICKS';
+            setTimeout(() => lowSticks.innerHTML = '', 3000)
         }
     }
 
@@ -1107,7 +1195,7 @@ class Session {
                 if(this.reset === true) this.resetGame();
             }
             
-        }, 17) //17 is 60FPS
+        }, 4) //17 is 60FPS
     }
 
     renderStartScreen() {
@@ -1194,9 +1282,7 @@ module.exports = Session;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const catUrl1 = __webpack_require__(/*! ../assets/cat1.png */ "./assets/cat1.png")
-const catUrl2 = __webpack_require__(/*! ../assets/cat2.png */ "./assets/cat2.png")
-const catUrl3 = __webpack_require__(/*! ../assets/cat3.png */ "./assets/cat3.png")
+
 const blobUrl1 = __webpack_require__(/*! ../assets/blob1.png */ "./assets/blob1.png")
 const blobUrl2 = __webpack_require__(/*! ../assets/blob2.png */ "./assets/blob2.png")
 const blobUrl3 = __webpack_require__(/*! ../assets/blob3.png */ "./assets/blob3.png")
@@ -1210,15 +1296,16 @@ class Unit {
         this.pos = obj.pos;
         this.vel = obj.vel;
         this.team = obj.team;
-        this.type = obj.type;
+        // this.type = obj.type;
         this.animationFrame = 0;
         this.moving = true;
         this.attacking = false;
+        this.width = 50;
+        this.height = 50;
+
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectile = 'hadoken';
-        this.width = 50;
-        this.height = 50;
         this.hp = 3;
     }
 
@@ -1230,25 +1317,6 @@ class Unit {
         }
     }
 
-    renderCat(ctx) {
-        let cat = new Image();
-        
-        if (this.moving === true) this.animationFrame += 1;
-
-        if(this.animationFrame < ANIMATE_FRAMES) {
-            cat.src = catUrl1;
-        } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
-            cat.src = catUrl2;
-        } else {
-            cat.src = catUrl3;
-        }
-
-        if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
-
-        let x = this.pos[0];
-        let y = this.pos[1];
-        ctx.drawImage(cat, x, y, this.width, this.height);
-    }
 
     renderBlob(ctx) {
         let blob = new Image();

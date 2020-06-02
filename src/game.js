@@ -1,6 +1,8 @@
 const Unit = require("./unit");
 const Base = require('./base')
 const Player = require('./player')
+const Cat = require('./cat')
+const Blob = require('./blob')
 
 const MIN_X = 0;
 const MAX_X = 1200;
@@ -42,23 +44,37 @@ class Game {
             vel = [-1,0]
         }
 
+
+
         if( player.spend(100) ) {
             //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
-                this.units.push(new Unit({
+                let unitProps = {
                     pos: [startPos + Math.random()*50,i],
                     vel,
                     team: player.team,
-                    type,
-                }));        
+                }
+                
+                switch (type) {
+                    case 'cat':
+                        this.units.push(new Cat(unitProps));                          
+                        break;
+                    case 'blob':
+                        this.units.push(new Blob(unitProps));   
+                        break;
+                    default:
+                        break;
+                }
+     
             } 
-        } else {
-            //display not enough $ message
-            let lowSticks = document.getElementById('not-enough-sticks')
-            if(lowSticks.innerHTML != 'NOT ENOUGH STICKS') {
-                lowSticks.innerHTML = 'NOT ENOUGH STICKS';
-                setTimeout(() => lowSticks.innerHTML = '', 3000)
-            }   
+        } else this.displayLowSticks();
+    }
+
+    displayLowSticks() {
+        let lowSticks = document.getElementById('not-enough-sticks')
+        if(lowSticks.innerHTML != 'NOT ENOUGH STICKS') {
+            lowSticks.innerHTML = 'NOT ENOUGH STICKS';
+            setTimeout(() => lowSticks.innerHTML = '', 3000)
         }
     }
 

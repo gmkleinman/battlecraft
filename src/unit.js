@@ -1,6 +1,4 @@
-const catUrl1 = require("../assets/cat1.png")
-const catUrl2 = require("../assets/cat2.png")
-const catUrl3 = require("../assets/cat3.png")
+
 const blobUrl1 = require("../assets/blob1.png")
 const blobUrl2 = require("../assets/blob2.png")
 const blobUrl3 = require("../assets/blob3.png")
@@ -14,15 +12,16 @@ class Unit {
         this.pos = obj.pos;
         this.vel = obj.vel;
         this.team = obj.team;
-        this.type = obj.type;
+        // this.type = obj.type;
         this.animationFrame = 0;
         this.moving = true;
         this.attacking = false;
+        this.width = 50;
+        this.height = 50;
+
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectile = 'hadoken';
-        this.width = 50;
-        this.height = 50;
         this.hp = 3;
     }
 
@@ -34,25 +33,6 @@ class Unit {
         }
     }
 
-    renderCat(ctx) {
-        let cat = new Image();
-        
-        if (this.moving === true) this.animationFrame += 1;
-
-        if(this.animationFrame < ANIMATE_FRAMES) {
-            cat.src = catUrl1;
-        } else if(this.animationFrame >= ANIMATE_FRAMES*2) {
-            cat.src = catUrl2;
-        } else {
-            cat.src = catUrl3;
-        }
-
-        if (this.animationFrame >= ANIMATE_FRAMES * 3) this.animationFrame = 0;
-
-        let x = this.pos[0];
-        let y = this.pos[1];
-        ctx.drawImage(cat, x, y, this.width, this.height);
-    }
 
     renderBlob(ctx) {
         let blob = new Image();
