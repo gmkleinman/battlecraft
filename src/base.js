@@ -21,6 +21,7 @@ class Base {
         } else {
             this.pos = [1050,175]
         }
+
     }
 
     attack(pos) {
