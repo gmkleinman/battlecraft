@@ -8,7 +8,6 @@ class Unit {
         this.pos = obj.pos;
         this.vel = obj.vel;
         this.team = obj.team;
-        // this.type = obj.type;
         this.animationFrame = 0;
         this.moving = true;
         this.attacking = false;
@@ -17,8 +16,6 @@ class Unit {
 
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
-        this.projectile = 'hadoken';
-        this.hp = 3;
     }
 
     draw(ctx) {
@@ -28,7 +25,6 @@ class Unit {
             this.renderBlob(ctx);
         }
     }
-
 
     renderBlob(ctx) {
         let blob = new Image();
@@ -50,26 +46,6 @@ class Unit {
         ctx.drawImage(blob, x, y, this.width, this.height);
     }
 
-    attack(enemyPos) {
-        let vel = this.unitVector(this.pos,enemyPos);
-        vel[0] *= 3;
-        vel[1] *= 3;
-
-        if (this.attackCooldown >= this.timeBetweenAttacks) {
-            this.attackCooldown = 0;
-            let pos = this.pos.slice(0)
-            let team = this.team
-            return new Projectile({
-                pos,
-                vel,
-                team,
-            })
-        } else {
-            this.attackCooldown += 1;
-            return null;
-        }    
-    }
-
     move() {
         this.pos[0] += this.vel[0];
         this.pos[1] += this.vel[1];
@@ -82,6 +58,20 @@ class Unit {
         x = x/divisor
         y = y/divisor
         return [x,y]
+    }
+
+    static cost(unitType) {
+        let costs = {
+            'alien': 1,
+            'frog': 1,
+            'cat': 1,
+            
+            //AI units
+            'blob': 1,
+            'monk': 1,
+            'snake': 1,
+        }
+        return costs[unitType];
     }
 }
 

@@ -11,10 +11,10 @@ class Projectile {
         this.vel = obj.vel;
         this.team = obj.team;
         this.type = obj.type;
+        this.damage = obj.damage;
         this.unitType = obj.unitType;
         this.width = 35;
         this.height = 35;
-        this.damage = 1;
     }
 
     draw(ctx) {

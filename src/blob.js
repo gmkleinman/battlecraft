@@ -8,12 +8,15 @@ const ANIMATE_FRAMES = 8;
 
 class Blob extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'blobProj';
-        this.hp = 3;
+        this.hp = 2;
         this.projectileSpeed = 6;
+        this.attackRange = 200;
+        this.projDamage = 1;
     }
     
     draw(ctx) {
@@ -47,9 +50,9 @@ class Blob extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }

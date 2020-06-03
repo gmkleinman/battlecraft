@@ -8,12 +8,16 @@ const ANIMATE_FRAMES = 8;
 
 class Cat extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel*4, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'catProj';
         this.hp = 3;
         this.projectileSpeed = 3;
+        this.attackRange = 110;
+        this.projDamage = 1;
+        
     }
 
     draw(ctx) {
@@ -47,9 +51,9 @@ class Cat extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }

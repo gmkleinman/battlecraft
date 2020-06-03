@@ -8,12 +8,16 @@ const ANIMATE_FRAMES = 8;
 
 class Alien extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'alienProj';
         this.hp = 3;
-        this.projectileSpeed = 6;
+        this.projectileSpeed = 2;
+        this.attackRange = 500;
+        this.projDamage = 2;
+
     }
     
     draw(ctx) {
@@ -47,9 +51,9 @@ class Alien extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }

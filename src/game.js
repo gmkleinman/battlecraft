@@ -6,6 +6,7 @@ const Alien = require('./alien')
 const Frog = require('./frog')
 const Monk = require('./monk')
 const Snake = require('./snake')
+const Unit = require('./snake')
 
 const MIN_X = 0;
 const MAX_X = 1200;
@@ -41,13 +42,15 @@ class Game {
 
         if(player.team === "green") {
             startPos = MIN_X + 150
-            vel = [1,0]
+            vel = 1
         } else {
             startPos = MAX_X - 250
-            vel = [-1,0]
+            vel = -1
         }
 
-        if( player.spend(100) ) {
+        let cost = Unit.cost(type);
+
+        if( player.spend(cost) ) {
             //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
                 let unitProps = {
@@ -102,6 +105,7 @@ class Game {
     drawUnits() {
         this.units.forEach(unit => {
             unit.draw(this.ctx);
+            unit.attackCooldown += 1;
         });
     }
 
@@ -122,7 +126,7 @@ class Game {
 
         this.units.forEach(otherUnit => {
             let distance = this.distance(currentUnit.pos, otherUnit.pos)
-            if ( distance <= 200 && currentUnit.team != otherUnit.team) {
+            if ( distance <= currentUnit.attackRange && currentUnit.team != otherUnit.team) {
                 target = 'enemy';
                 let newProjectile = currentUnit.attack(otherUnit.pos);
                 if (newProjectile) {
@@ -139,18 +143,18 @@ class Game {
     checkProjectileCollisions() {
         for (let i = 0; i < this.units.length; i++) {
             let unit = this.units[i];
-            let x1 = unit.pos[0] - unit.width/2
-            let x2 = unit.pos[0] + unit.width/2
-            let y1 = unit.pos[1] - unit.height/2
-            let y2 = unit.pos[1] + unit.height/2
+            let x1 = unit.pos[0] - unit.width/2 + 5
+            let x2 = unit.pos[0] + unit.width/2 - 5
+            let y1 = unit.pos[1] - unit.height/2 + 5
+            let y2 = unit.pos[1] + unit.height/2 - 5
 
             for (let j = 0; j < this.projectiles.length; j++) {
 
                 let projectile = this.projectiles[j];
-                let x3 = projectile.pos[0] - projectile.width/2
-                let x4 = projectile.pos[0] + projectile.width/2
-                let y3 = projectile.pos[1] - projectile.height/2
-                let y4 = projectile.pos[1] + projectile.height/2
+                let x3 = projectile.pos[0] - projectile.width/2 + 10
+                let x4 = projectile.pos[0] + projectile.width/2 - 10
+                let y3 = projectile.pos[1] - projectile.height/2 + 10
+                let y4 = projectile.pos[1] + projectile.height/2 - 10
                 if (
                     ((x1 <= x3 && x2 >= x3) || (x1 <= x4 && x2 >= x4))
                     && ((y1 <= y3 && y2 >= y3) || (y1 <= y4 && y2 >= y4))
@@ -260,11 +264,22 @@ class Game {
         document.getElementById("spawnCat").onclick = () => { 
             this.createArmy(this.players[0], 'cat');
         } 
+        document.getElementById("spawnAlien").onclick = () => { 
+            this.createArmy(this.players[0], 'alien');
+        } 
+        document.getElementById("spawnBlob").onclick = () => { 
+            this.createArmy(this.players[1], 'blob');
+        } 
+        document.getElementById("spawnFrog").onclick = () => { 
+            this.createArmy(this.players[0], 'frog');
+        } 
+        document.getElementById("spawnMonk").onclick = () => { 
+            this.createArmy(this.players[1], 'monk');
+        } 
+        document.getElementById("spawnSnake").onclick = () => { 
+            this.createArmy(this.players[1], 'snake');
+        } 
         this.spawnTimer = 700;
-        // testing button below:
-        // document.getElementById("spawnBlob").onclick = () => { 
-        //     this.createArmy(this.players[1], 'blob');
-        // } 
     }
 
     spawnEnemies() {

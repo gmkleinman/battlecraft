@@ -821,12 +821,16 @@ const ANIMATE_FRAMES = 8;
 
 class Alien extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'alienProj';
         this.hp = 3;
-        this.projectileSpeed = 6;
+        this.projectileSpeed = 2;
+        this.attackRange = 500;
+        this.projDamage = 2;
+
     }
     
     draw(ctx) {
@@ -860,9 +864,9 @@ class Alien extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }
@@ -901,6 +905,7 @@ class Base {
         } else {
             this.pos = [1050,175]
         }
+
     }
 
     attack(pos) {
@@ -949,12 +954,15 @@ const ANIMATE_FRAMES = 8;
 
 class Blob extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'blobProj';
-        this.hp = 3;
+        this.hp = 2;
         this.projectileSpeed = 6;
+        this.attackRange = 200;
+        this.projDamage = 1;
     }
     
     draw(ctx) {
@@ -988,9 +996,9 @@ class Blob extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }
@@ -1016,12 +1024,16 @@ const ANIMATE_FRAMES = 8;
 
 class Cat extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel*4, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'catProj';
         this.hp = 3;
         this.projectileSpeed = 3;
+        this.attackRange = 110;
+        this.projDamage = 1;
+        
     }
 
     draw(ctx) {
@@ -1055,9 +1067,9 @@ class Cat extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }
@@ -1083,12 +1095,15 @@ const ANIMATE_FRAMES = 8;
 
 class Frog extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel*2, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'frogProj';
         this.hp = 3;
         this.projectileSpeed = 6;
+        this.attackRange = 250;
+        this.projDamage = 1;
     }
     
     draw(ctx) {
@@ -1122,9 +1137,9 @@ class Frog extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }
@@ -1148,6 +1163,7 @@ const Alien = __webpack_require__(/*! ./alien */ "./src/alien.js")
 const Frog = __webpack_require__(/*! ./frog */ "./src/frog.js")
 const Monk = __webpack_require__(/*! ./monk */ "./src/monk.js")
 const Snake = __webpack_require__(/*! ./snake */ "./src/snake.js")
+const Unit = __webpack_require__(/*! ./snake */ "./src/snake.js")
 
 const MIN_X = 0;
 const MAX_X = 1200;
@@ -1183,13 +1199,15 @@ class Game {
 
         if(player.team === "green") {
             startPos = MIN_X + 150
-            vel = [1,0]
+            vel = 1
         } else {
             startPos = MAX_X - 250
-            vel = [-1,0]
+            vel = -1
         }
 
-        if( player.spend(100) ) {
+        let cost = Unit.cost(type);
+
+        if( player.spend(cost) ) {
             //if player has enough money, spawn their units
             for (let i = MIN_Y+100; i < MAX_Y-100; i+=55) {
                 let unitProps = {
@@ -1244,6 +1262,7 @@ class Game {
     drawUnits() {
         this.units.forEach(unit => {
             unit.draw(this.ctx);
+            unit.attackCooldown += 1;
         });
     }
 
@@ -1264,7 +1283,7 @@ class Game {
 
         this.units.forEach(otherUnit => {
             let distance = this.distance(currentUnit.pos, otherUnit.pos)
-            if ( distance <= 200 && currentUnit.team != otherUnit.team) {
+            if ( distance <= currentUnit.attackRange && currentUnit.team != otherUnit.team) {
                 target = 'enemy';
                 let newProjectile = currentUnit.attack(otherUnit.pos);
                 if (newProjectile) {
@@ -1281,18 +1300,18 @@ class Game {
     checkProjectileCollisions() {
         for (let i = 0; i < this.units.length; i++) {
             let unit = this.units[i];
-            let x1 = unit.pos[0] - unit.width/2
-            let x2 = unit.pos[0] + unit.width/2
-            let y1 = unit.pos[1] - unit.height/2
-            let y2 = unit.pos[1] + unit.height/2
+            let x1 = unit.pos[0] - unit.width/2 + 5
+            let x2 = unit.pos[0] + unit.width/2 - 5
+            let y1 = unit.pos[1] - unit.height/2 + 5
+            let y2 = unit.pos[1] + unit.height/2 - 5
 
             for (let j = 0; j < this.projectiles.length; j++) {
 
                 let projectile = this.projectiles[j];
-                let x3 = projectile.pos[0] - projectile.width/2
-                let x4 = projectile.pos[0] + projectile.width/2
-                let y3 = projectile.pos[1] - projectile.height/2
-                let y4 = projectile.pos[1] + projectile.height/2
+                let x3 = projectile.pos[0] - projectile.width/2 + 10
+                let x4 = projectile.pos[0] + projectile.width/2 - 10
+                let y3 = projectile.pos[1] - projectile.height/2 + 10
+                let y4 = projectile.pos[1] + projectile.height/2 - 10
                 if (
                     ((x1 <= x3 && x2 >= x3) || (x1 <= x4 && x2 >= x4))
                     && ((y1 <= y3 && y2 >= y3) || (y1 <= y4 && y2 >= y4))
@@ -1402,11 +1421,22 @@ class Game {
         document.getElementById("spawnCat").onclick = () => { 
             this.createArmy(this.players[0], 'cat');
         } 
+        document.getElementById("spawnAlien").onclick = () => { 
+            this.createArmy(this.players[0], 'alien');
+        } 
+        document.getElementById("spawnBlob").onclick = () => { 
+            this.createArmy(this.players[1], 'blob');
+        } 
+        document.getElementById("spawnFrog").onclick = () => { 
+            this.createArmy(this.players[0], 'frog');
+        } 
+        document.getElementById("spawnMonk").onclick = () => { 
+            this.createArmy(this.players[1], 'monk');
+        } 
+        document.getElementById("spawnSnake").onclick = () => { 
+            this.createArmy(this.players[1], 'snake');
+        } 
         this.spawnTimer = 700;
-        // testing button below:
-        // document.getElementById("spawnBlob").onclick = () => { 
-        //     this.createArmy(this.players[1], 'blob');
-        // } 
     }
 
     spawnEnemies() {
@@ -1481,12 +1511,15 @@ const ANIMATE_FRAMES = 8;
 
 class Monk extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel*2, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'monkProj';
         this.hp = 3;
         this.projectileSpeed = 6;
+        this.attackRange = 110;
+        this.projDamage = 2;
     }
     
     draw(ctx) {
@@ -1520,9 +1553,9 @@ class Monk extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }
@@ -1595,10 +1628,10 @@ class Projectile {
         this.vel = obj.vel;
         this.team = obj.team;
         this.type = obj.type;
+        this.damage = obj.damage;
         this.unitType = obj.unitType;
         this.width = 35;
         this.height = 35;
-        this.damage = 1;
     }
 
     draw(ctx) {
@@ -1688,7 +1721,7 @@ class Session {
                 if(this.reset === true) this.resetGame();
             }
             
-        }, 4) //17 is 60FPS
+        }, 17) //17 is 60FPS
     }
 
     renderStartScreen() {
@@ -1785,12 +1818,15 @@ const ANIMATE_FRAMES = 8;
 
 class Snake extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel*2, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'snakeProj';
         this.hp = 3;
         this.projectileSpeed = 6;
+        this.attackRange = 150;
+        this.projDamage = 1;
     }
     
     draw(ctx) {
@@ -1824,9 +1860,9 @@ class Snake extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }
@@ -1852,7 +1888,6 @@ class Unit {
         this.pos = obj.pos;
         this.vel = obj.vel;
         this.team = obj.team;
-        // this.type = obj.type;
         this.animationFrame = 0;
         this.moving = true;
         this.attacking = false;
@@ -1861,8 +1896,6 @@ class Unit {
 
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
-        this.projectile = 'hadoken';
-        this.hp = 3;
     }
 
     draw(ctx) {
@@ -1872,7 +1905,6 @@ class Unit {
             this.renderBlob(ctx);
         }
     }
-
 
     renderBlob(ctx) {
         let blob = new Image();
@@ -1894,26 +1926,6 @@ class Unit {
         ctx.drawImage(blob, x, y, this.width, this.height);
     }
 
-    attack(enemyPos) {
-        let vel = this.unitVector(this.pos,enemyPos);
-        vel[0] *= 3;
-        vel[1] *= 3;
-
-        if (this.attackCooldown >= this.timeBetweenAttacks) {
-            this.attackCooldown = 0;
-            let pos = this.pos.slice(0)
-            let team = this.team
-            return new Projectile({
-                pos,
-                vel,
-                team,
-            })
-        } else {
-            this.attackCooldown += 1;
-            return null;
-        }    
-    }
-
     move() {
         this.pos[0] += this.vel[0];
         this.pos[1] += this.vel[1];
@@ -1926,6 +1938,20 @@ class Unit {
         x = x/divisor
         y = y/divisor
         return [x,y]
+    }
+
+    static cost(unitType) {
+        let costs = {
+            'alien': 1,
+            'frog': 1,
+            'cat': 1,
+            
+            //AI units
+            'blob': 1,
+            'monk': 1,
+            'snake': 1,
+        }
+        return costs[unitType];
     }
 }
 

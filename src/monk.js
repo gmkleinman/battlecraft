@@ -8,12 +8,15 @@ const ANIMATE_FRAMES = 8;
 
 class Monk extends Unit{
     constructor(obj) {
+        obj.vel = [obj.vel*2, 0]
         super(obj);
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'monkProj';
         this.hp = 3;
         this.projectileSpeed = 6;
+        this.attackRange = 110;
+        this.projDamage = 2;
     }
     
     draw(ctx) {
@@ -47,9 +50,9 @@ class Monk extends Unit{
                 vel,
                 team: this.team,
                 type: this.projectileType,
+                damage: this.projDamage,
             })
         } else {
-            this.attackCooldown += 1;
             return null;
         }    
     }
