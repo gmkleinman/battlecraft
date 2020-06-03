@@ -1026,8 +1026,8 @@ class Cat extends Unit{
     constructor(obj) {
         obj.vel = [obj.vel*4, 0]
         super(obj);
-        this.attackCooldown = 80;
-        this.timeBetweenAttacks = 100;
+        this.attackCooldown = 40;
+        this.timeBetweenAttacks = 50;
         this.projectileType = 'catProj';
         this.hp = 3;
         this.projectileSpeed = 3;
