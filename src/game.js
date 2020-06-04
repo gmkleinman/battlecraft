@@ -272,7 +272,16 @@ class Game {
         } 
         
         this.spawnTimer = 700;
+    
+
         
+        // let cat = document.createElement("IMG");
+        // cat.setAttribute("src", catUrl1);
+        // cat.setAttribute("width", "30");
+        // cat.setAttribute("height", "30");
+        // document.getElementById('catIcon').appendChild(cat)
+        // document.body.appendChild(cat);
+
         
         //for testing:
             // document.getElementById("spawnBlob").onclick = () => { 

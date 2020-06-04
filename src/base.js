@@ -12,7 +12,7 @@ class Base {
         this.attackCooldown = 300;
         this.timeBetweenAttacks = 300;
         this.projectile = 'hadoken';
-        this.hp = 10;
+        this.hp = 100;
         this.width = 100;
         this.height = 100;
 
@@ -39,12 +39,24 @@ class Base {
             let greenBase = new Image();
             greenBase.src = tree;
             ctx.drawImage(greenBase, x, y, this.width, this.height);
+            this.drawHpBar(ctx, x-8, y);
         } else {
             let redBase = new Image();
             redBase.src = rig;
             ctx.drawImage(redBase, x, y, this.width, this.height);
+            this.drawHpBar(ctx, x, y);
         }
 
+    }
+
+    drawHpBar(ctx, x, y) {
+        x = x-10
+        y = y-25
+        let hpBar = this.hp*1.2;
+        ctx.fillStyle = "black";
+        ctx.fillRect(x, y, 120, 12);
+        ctx.fillStyle = "#ff4242";
+        ctx.fillRect(x, y, hpBar, 12);
     }
 }
 

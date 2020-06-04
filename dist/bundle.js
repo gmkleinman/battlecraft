@@ -170,7 +170,7 @@ module.exports = __webpack_require__.p + "4da03cea04ff485f442c814c507fac5c.png";
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "c8ada7245aa454d18a7140d2e577f099.png";
+module.exports = __webpack_require__.p + "bbc13ff2de2c4424d18a403bdb8c93f2.png";
 
 /***/ }),
 
@@ -258,7 +258,7 @@ module.exports = __webpack_require__.p + "04f71d4f81f2a96f4a1b8cb5cf28e078.png";
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bbc13ff2de2c4424d18a403bdb8c93f2.png";
+module.exports = __webpack_require__.p + "9c105558299f47daad2428bea61cb832.png";
 
 /***/ }),
 
@@ -357,7 +357,7 @@ module.exports = __webpack_require__.p + "3380a4a8aadcbf3114f2fa0dbb92ff1f.png";
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "9c105558299f47daad2428bea61cb832.png";
+module.exports = __webpack_require__.p + "c8ada7245aa454d18a7140d2e577f099.png";
 
 /***/ }),
 
@@ -412,7 +412,7 @@ module.exports = content.locals || {};
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body {\n    background: rgb(53, 54, 58);\n    font-family: 'Roboto', sans-serif;\n}\n\n#container {\n    margin-top: 25px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#game {\n    width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    border: 8px solid rgb(0, 0, 0);\n    border-radius: 8px;\n}\n\n#canvas {\n    background: rgb(98, 167, 95);\n\n}\n\n.hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   /* background: rgb(0, 94, 8); */\n   /* background: rgb(0, 53, 5); */\n   background: rgb(0, 37, 4);\n   color: rgb(221, 221, 221);\n   /* color: rgb(8, 0, 126); */\n}\n\n/* #bottom-hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   background: rgb(0, 37, 4);\n} */\n\n#header-text {\n    display: flex;\n    justify-content: space-between;\n    align-content: space-between;\n    font-size: 30px;\n    margin-top: 7px;\n    margin-left: 25px;\n    margin-right: 25px;\n}\n\nbutton {\n    height: 30px;\n}\n\n#not-enough-sticks {\n    color: rgb(255, 110, 110);\n}\n\n.spawn-button {\n    position: relative;\n    display: inline-block;\n  }\n  \n.spawn-button .unit-tooltip {\n    display: flex;\n    flex-direction: column;\n    text-align: left;\n    justify-content: left;\n    visibility: hidden;\n    width: 175px;\n    background-color: #555;\n    color: #fff;\n    border-radius: 6px;\n    padding: 5px 0;\n    position: absolute;\n    z-index: 1;\n    top: 40px;\n    left: 50%;\n    margin-left: -100px;\n    opacity: 0;\n    transition: opacity 0.3s;\n    border: solid rgb(158, 158, 158);\n}\n\n.spawn-button:hover .unit-tooltip {\n    visibility: visible;\n    opacity: 1;\n} \n\n.stat-line {\n    margin-left: 15px;\n}\n\n.stat-value {\n    color: rgb(152, 152, 226);\n    margin-left: 4px;\n    line-height: 1.4;\n}\n\n\n  .spawn-button:focus {\n    outline: none;\n    box-shadow: none;\n  }", ""]);
+exports.push([module.i, "body {\n    background: rgb(53, 54, 58);\n    font-family: 'Roboto', sans-serif;\n}\n\n#container {\n    margin-top: 25px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#game {\n    width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    border: 8px solid rgb(0, 0, 0);\n    border-radius: 8px;\n}\n\n#canvas {\n    background: rgb(98, 167, 95);\n\n}\n\n.hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   /* background: rgb(0, 94, 8); */\n   /* background: rgb(0, 53, 5); */\n   background: rgb(0, 37, 4);\n   color: rgb(221, 221, 221);\n   /* color: rgb(8, 0, 126); */\n}\n\n/* #bottom-hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   background: rgb(0, 37, 4);\n} */\n\n#header-text {\n    display: flex;\n    justify-content: space-between;\n    align-content: space-between;\n    font-size: 30px;\n    margin-top: 7px;\n    margin-left: 25px;\n    margin-right: 25px;\n}\n\nbutton {\n    height: 35px;\n    margin-top: 4px;\n    margin-right: 200px;\n}\n\n#not-enough-sticks {\n    color: rgb(255, 110, 110);\n}\n\n.spawn-button {\n    position: relative;\n    display: inline-block;\n  }\n  \n.spawn-button .unit-tooltip {\n    display: flex;\n    flex-direction: column;\n    text-align: left;\n    justify-content: left;\n    visibility: hidden;\n    width: 175px;\n    background-color: #555;\n    color: #fff;\n    border-radius: 6px;\n    padding: 5px 0;\n    position: absolute;\n    z-index: 1;\n    top: 40px;\n    left: 50%;\n    margin-left: -100px;\n    opacity: 0;\n    transition: opacity 0.3s;\n    border: solid rgb(158, 158, 158);\n}\n\n.spawn-button:hover .unit-tooltip {\n    visibility: visible;\n    opacity: 1;\n} \n\n.stat-line {\n    margin-left: 15px;\n}\n\n.stat-value {\n    color: rgb(152, 152, 226);\n    margin-left: 4px;\n    line-height: 1.4;\n}\n\n\n.spawn-button:focus {\n    outline: none;\n    box-shadow: none;\n}\n\n.icon {\n    margin-left: 80px;\n    margin-right: 8px;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -896,7 +896,7 @@ class Base {
         this.attackCooldown = 300;
         this.timeBetweenAttacks = 300;
         this.projectile = 'hadoken';
-        this.hp = 10;
+        this.hp = 100;
         this.width = 100;
         this.height = 100;
 
@@ -923,12 +923,24 @@ class Base {
             let greenBase = new Image();
             greenBase.src = tree;
             ctx.drawImage(greenBase, x, y, this.width, this.height);
+            this.drawHpBar(ctx, x-8, y);
         } else {
             let redBase = new Image();
             redBase.src = rig;
             ctx.drawImage(redBase, x, y, this.width, this.height);
+            this.drawHpBar(ctx, x, y);
         }
 
+    }
+
+    drawHpBar(ctx, x, y) {
+        x = x-10
+        y = y-25
+        let hpBar = this.hp*1.2;
+        ctx.fillStyle = "black";
+        ctx.fillRect(x, y, 120, 12);
+        ctx.fillStyle = "#ff4242";
+        ctx.fillRect(x, y, hpBar, 12);
     }
 }
 
@@ -1052,6 +1064,7 @@ class Cat extends Unit{
         let x = this.pos[0];
         let y = this.pos[1];
         ctx.drawImage(cat, x, y, this.width, this.height);
+        
     }
 
     attack(enemyPos) {
@@ -1429,7 +1442,16 @@ class Game {
         } 
         
         this.spawnTimer = 700;
+    
+
         
+        // let cat = document.createElement("IMG");
+        // cat.setAttribute("src", catUrl1);
+        // cat.setAttribute("width", "30");
+        // cat.setAttribute("height", "30");
+        // document.getElementById('catIcon').appendChild(cat)
+        // document.body.appendChild(cat);
+
         
         //for testing:
             // document.getElementById("spawnBlob").onclick = () => { 
@@ -1481,10 +1503,15 @@ module.exports = Game;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/style.css */ "./css/style.css");
 /* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_0__);
-const Session = __webpack_require__(/*! ./session */ "./src/session.js")
-const GAMEHEIGHT = 400
-const GAMEWIDTH = 1200
+const Session = __webpack_require__(/*! ./session */ "./src/session.js");
+const catUrl1 = __webpack_require__(/*! ../assets/cat1.png */ "./assets/cat1.png");
+const frogUrl1 = __webpack_require__(/*! ../assets/frog1.png */ "./assets/frog1.png")
+const alienUrl1 = __webpack_require__(/*! ../assets/alien1.png */ "./assets/alien1.png")
 
+
+const GAMEHEIGHT = 400;
+const GAMEWIDTH = 1200;
+const ICONSIZE = 37;
 
 document.addEventListener("DOMContentLoaded", () => {
     let canvasEl = document.getElementById("canvas");
@@ -1493,8 +1520,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ctx = canvas.getContext('2d');
     let session = new Session(ctx);
+    createIcons();
     session.play();
 })
+
+const createIcons = () => {
+    let cat = new Image(ICONSIZE, ICONSIZE);
+    cat.src = catUrl1;
+    document.getElementById('catIcon').appendChild(cat)
+
+    let alien = new Image(ICONSIZE, ICONSIZE);
+    alien.src = alienUrl1;
+    document.getElementById('alienIcon').appendChild(alien)
+
+    let frog = new Image(ICONSIZE, ICONSIZE);
+    frog.src = frogUrl1;
+    document.getElementById('frogIcon').appendChild(frog)
+}
 
 /***/ }),
 

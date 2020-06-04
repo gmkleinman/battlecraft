@@ -36,6 +36,7 @@ class Cat extends Unit{
         let x = this.pos[0];
         let y = this.pos[1];
         ctx.drawImage(cat, x, y, this.width, this.height);
+        
     }
 
     attack(enemyPos) {
