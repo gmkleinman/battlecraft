@@ -63,20 +63,17 @@ button {
 .spawn-button {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black;
   }
   
-  .spawn-button .unit-tooltip {
+.spawn-button .unit-tooltip {
     display: flex;
     flex-direction: column;
     text-align: left;
     justify-content: left;
-    
     visibility: hidden;
-    width: 200px;
+    width: 175px;
     background-color: #555;
     color: #fff;
-    /* text-align: center; */
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
@@ -86,9 +83,26 @@ button {
     margin-left: -100px;
     opacity: 0;
     transition: opacity 0.3s;
-  }
-  
-  .spawn-button:hover .unit-tooltip {
+    border: solid rgb(158, 158, 158);
+}
+
+.spawn-button:hover .unit-tooltip {
     visibility: visible;
     opacity: 1;
-  } 
+} 
+
+.stat-line {
+    margin-left: 15px;
+}
+
+.stat-value {
+    color: rgb(152, 152, 226);
+    margin-left: 4px;
+    line-height: 1.4;
+}
+
+
+  .spawn-button:focus {
+    outline: none;
+    box-shadow: none;
+  }

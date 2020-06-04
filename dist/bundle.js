@@ -412,7 +412,7 @@ module.exports = content.locals || {};
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body {\n    background: rgb(53, 54, 58);\n    font-family: 'Roboto', sans-serif;\n}\n\n#container {\n    margin-top: 25px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#game {\n    width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    border: 8px solid rgb(0, 0, 0);\n    border-radius: 8px;\n}\n\n#canvas {\n    background: rgb(98, 167, 95);\n\n}\n\n.hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   /* background: rgb(0, 94, 8); */\n   /* background: rgb(0, 53, 5); */\n   background: rgb(0, 37, 4);\n   color: rgb(221, 221, 221);\n   /* color: rgb(8, 0, 126); */\n}\n\n/* #bottom-hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   background: rgb(0, 37, 4);\n} */\n\n#header-text {\n    display: flex;\n    justify-content: space-between;\n    align-content: space-between;\n    font-size: 30px;\n    margin-top: 7px;\n    margin-left: 25px;\n    margin-right: 25px;\n}\n\nbutton {\n    height: 30px;\n}\n\n#not-enough-sticks {\n    color: rgb(255, 110, 110);\n}\n\n.spawn-button {\n    position: relative;\n    display: inline-block;\n    border-bottom: 1px dotted black;\n  }\n  \n  .spawn-button .unit-tooltip {\n    display: flex;\n    flex-direction: column;\n    text-align: left;\n    justify-content: left;\n    \n    visibility: hidden;\n    width: 200px;\n    background-color: #555;\n    color: #fff;\n    /* text-align: center; */\n    border-radius: 6px;\n    padding: 5px 0;\n    position: absolute;\n    z-index: 1;\n    top: 40px;\n    left: 50%;\n    margin-left: -100px;\n    opacity: 0;\n    transition: opacity 0.3s;\n  }\n  \n  .spawn-button:hover .unit-tooltip {\n    visibility: visible;\n    opacity: 1;\n  } \n", ""]);
+exports.push([module.i, "body {\n    background: rgb(53, 54, 58);\n    font-family: 'Roboto', sans-serif;\n}\n\n#container {\n    margin-top: 25px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#game {\n    width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    border: 8px solid rgb(0, 0, 0);\n    border-radius: 8px;\n}\n\n#canvas {\n    background: rgb(98, 167, 95);\n\n}\n\n.hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   /* background: rgb(0, 94, 8); */\n   /* background: rgb(0, 53, 5); */\n   background: rgb(0, 37, 4);\n   color: rgb(221, 221, 221);\n   /* color: rgb(8, 0, 126); */\n}\n\n/* #bottom-hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   background: rgb(0, 37, 4);\n} */\n\n#header-text {\n    display: flex;\n    justify-content: space-between;\n    align-content: space-between;\n    font-size: 30px;\n    margin-top: 7px;\n    margin-left: 25px;\n    margin-right: 25px;\n}\n\nbutton {\n    height: 30px;\n}\n\n#not-enough-sticks {\n    color: rgb(255, 110, 110);\n}\n\n.spawn-button {\n    position: relative;\n    display: inline-block;\n  }\n  \n.spawn-button .unit-tooltip {\n    display: flex;\n    flex-direction: column;\n    text-align: left;\n    justify-content: left;\n    visibility: hidden;\n    width: 175px;\n    background-color: #555;\n    color: #fff;\n    border-radius: 6px;\n    padding: 5px 0;\n    position: absolute;\n    z-index: 1;\n    top: 40px;\n    left: 50%;\n    margin-left: -100px;\n    opacity: 0;\n    transition: opacity 0.3s;\n    border: solid rgb(158, 158, 158);\n}\n\n.spawn-button:hover .unit-tooltip {\n    visibility: visible;\n    opacity: 1;\n} \n\n.stat-line {\n    margin-left: 15px;\n}\n\n.stat-value {\n    color: rgb(152, 152, 226);\n    margin-left: 4px;\n    line-height: 1.4;\n}\n\n\n  .spawn-button:focus {\n    outline: none;\n    box-shadow: none;\n  }", ""]);
 // Exports
 module.exports = exports;
 
@@ -1424,19 +1424,23 @@ class Game {
         document.getElementById("spawnAlien").onclick = () => { 
             this.createArmy(this.players[0], 'alien');
         } 
-        document.getElementById("spawnBlob").onclick = () => { 
-            this.createArmy(this.players[1], 'blob');
-        } 
         document.getElementById("spawnFrog").onclick = () => { 
             this.createArmy(this.players[0], 'frog');
         } 
-        document.getElementById("spawnMonk").onclick = () => { 
-            this.createArmy(this.players[1], 'monk');
-        } 
-        document.getElementById("spawnSnake").onclick = () => { 
-            this.createArmy(this.players[1], 'snake');
-        } 
+        
         this.spawnTimer = 700;
+        
+        
+        //for testing:
+            // document.getElementById("spawnBlob").onclick = () => { 
+            //     this.createArmy(this.players[1], 'blob');
+            // } 
+        // document.getElementById("spawnMonk").onclick = () => { 
+        //     this.createArmy(this.players[1], 'monk');
+        // } 
+        // document.getElementById("spawnSnake").onclick = () => { 
+        //     this.createArmy(this.players[1], 'snake');
+        // } 
     }
 
     spawnEnemies() {

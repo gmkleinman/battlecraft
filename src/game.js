@@ -267,19 +267,23 @@ class Game {
         document.getElementById("spawnAlien").onclick = () => { 
             this.createArmy(this.players[0], 'alien');
         } 
-        document.getElementById("spawnBlob").onclick = () => { 
-            this.createArmy(this.players[1], 'blob');
-        } 
         document.getElementById("spawnFrog").onclick = () => { 
             this.createArmy(this.players[0], 'frog');
         } 
-        document.getElementById("spawnMonk").onclick = () => { 
-            this.createArmy(this.players[1], 'monk');
-        } 
-        document.getElementById("spawnSnake").onclick = () => { 
-            this.createArmy(this.players[1], 'snake');
-        } 
+        
         this.spawnTimer = 700;
+        
+        
+        //for testing:
+            // document.getElementById("spawnBlob").onclick = () => { 
+            //     this.createArmy(this.players[1], 'blob');
+            // } 
+        // document.getElementById("spawnMonk").onclick = () => { 
+        //     this.createArmy(this.players[1], 'monk');
+        // } 
+        // document.getElementById("spawnSnake").onclick = () => { 
+        //     this.createArmy(this.players[1], 'snake');
+        // } 
     }
 
     spawnEnemies() {
