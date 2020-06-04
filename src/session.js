@@ -63,7 +63,6 @@ class Session {
     }
 
     loadNextLevel() {
-        // this.level += 1;
         clearInterval(this.gamePlay);
         this.nextLevel = false;
         this.play();
