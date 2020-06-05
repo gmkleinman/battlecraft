@@ -37,7 +37,7 @@ class Session {
                 if(this.reset === true) this.resetGame();
             }
             
-        }, 12) //17 is 60FPS
+        }, 17) //17 is 60FPS
     }
 
     renderStartScreen() {
@@ -95,7 +95,7 @@ class Session {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.ctx.fillStyle = "#000654"
         this.ctx.font = "900 50px Arial";
-        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}`, 155, MAX_Y/2+15);
+        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}!`, 155, MAX_Y/2+15);
         this.game.players[0].income = 0;
     }
 

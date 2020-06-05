@@ -23,7 +23,7 @@ class Level {
     }
 
     static level1(spawnTimer) {
-        if(spawnTimer%650 === 0 || spawnTimer === 250) {
+        if(spawnTimer%1000 === 0 || spawnTimer === 350) {
             return 'blob'
         } else return null;
     }

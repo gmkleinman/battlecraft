@@ -299,6 +299,41 @@ class Game {
         }
     }
 
+    renderTutorial() {
+        this.ctx.font = "900 20px Arial";
+        this.ctx.fillStyle = "black"
+        this.ctx.fillText("DEFEND THIS", 25, 300);  
+        this.ctx.fillText("DESTROY THIS", 1025, 300);  
+        this.ctx.fillText("SPEND THESE", 225, 75);  
+        this.ctx.fillText("CLICK THESE", 125, 340);  
+        this.renderUpArrow();
+        this.renderDownArrow();
+    }
+
+    renderUpArrow() {
+        this.ctx.beginPath();
+        this.ctx.moveTo(300, 50);
+        this.ctx.lineTo(300, 4);
+        this.ctx.moveTo(301, 4);
+        this.ctx.lineTo(290, 25);
+        this.ctx.moveTo(299, 4);
+        this.ctx.lineTo(310, 25);
+        this.ctx.lineWidth = 5;
+        this.ctx.stroke();
+    }
+
+    renderDownArrow() {
+        this.ctx.beginPath();
+        this.ctx.moveTo(200, 396);
+        this.ctx.lineTo(200, 350);
+        this.ctx.moveTo(201, 396);
+        this.ctx.lineTo(190, 375);
+        this.ctx.moveTo(199, 396);
+        this.ctx.lineTo(210, 375);
+        this.ctx.lineWidth = 5;
+        this.ctx.stroke();
+    }
+
     play() {
         this.drawAll();
         this.moveUnits();
@@ -309,6 +344,7 @@ class Game {
         this.giveIncome();
         this.renderStickAmount();
         this.spawnEnemies();
+        if(this.level === 1 && this.spawnTimer <= 1000) this.renderTutorial();
     }
 
 

@@ -412,7 +412,7 @@ module.exports = content.locals || {};
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body {\n    background: rgb(53, 54, 58);\n    font-family: 'Roboto', sans-serif;\n}\n\n#container {\n    margin-top: 25px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#game {\n    width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    border: 8px solid rgb(0, 0, 0);\n    border-radius: 8px;\n}\n\n#canvas {\n    background: rgb(98, 167, 95);\n\n}\n\n.hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   /* background: rgb(0, 94, 8); */\n   /* background: rgb(0, 53, 5); */\n   background: rgb(0, 37, 4);\n   color: rgb(221, 221, 221);\n   /* color: rgb(8, 0, 126); */\n}\n\n/* #bottom-hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   background: rgb(0, 37, 4);\n} */\n\n#header-text {\n    display: flex;\n    justify-content: space-between;\n    align-content: space-between;\n    font-size: 30px;\n    margin-top: 7px;\n    margin-left: 25px;\n    margin-right: 25px;\n}\n\nbutton {\n    height: 35px;\n    margin-top: 4px;\n    margin-right: 200px;\n}\n\n#not-enough-sticks {\n    color: rgb(255, 110, 110);\n}\n\n.spawn-button {\n    position: relative;\n    display: inline-block;\n  }\n  \n.spawn-button .unit-tooltip {\n    display: flex;\n    flex-direction: column;\n    text-align: left;\n    justify-content: left;\n    visibility: hidden;\n    width: 175px;\n    background-color: #555;\n    color: #fff;\n    border-radius: 6px;\n    padding: 5px 0;\n    position: absolute;\n    z-index: 1;\n    top: 40px;\n    left: 50%;\n    margin-left: -100px;\n    opacity: 0;\n    transition: opacity 0.3s;\n    border: solid rgb(158, 158, 158);\n}\n\n.spawn-button:hover .unit-tooltip {\n    visibility: visible;\n    opacity: 1;\n} \n\n.stat-line {\n    margin-left: 15px;\n}\n\n.stat-value {\n    color: rgb(152, 152, 226);\n    margin-left: 4px;\n    line-height: 1.4;\n}\n\n\n.spawn-button:focus {\n    outline: none;\n    box-shadow: none;\n}\n\n.icon {\n    margin-left: 80px;\n    margin-right: 8px;\n}", ""]);
+exports.push([module.i, "body {\n    background: rgb(53, 54, 58);\n    font-family: 'Roboto', sans-serif;\n}\n\n#container {\n    margin-top: 25px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n\n#game {\n    width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    border: 8px solid rgb(0, 0, 0);\n    border-radius: 8px;\n}\n\n#canvas {\n    background: rgb(98, 167, 95);\n\n}\n\n.hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   /* background: rgb(0, 94, 8); */\n   /* background: rgb(0, 53, 5); */\n   background: rgb(0, 37, 4);\n   color: rgb(221, 221, 221);\n   /* color: rgb(8, 0, 126); */\n}\n\n/* #bottom-hud {\n   display: inline-block;\n   width: 1200px;\n   height: 50px;\n   background: rgb(0, 37, 4);\n} */\n\n#header-text {\n    display: flex;\n    justify-content: space-between;\n    align-content: space-between;\n    font-size: 30px;\n    margin-top: 7px;\n    margin-left: 25px;\n    margin-right: 25px;\n}\n\nbutton {\n    height: 35px;\n    margin-top: 2px;\n    margin-right: 200px;\n}\n\n#not-enough-sticks {\n    color: rgb(255, 110, 110);\n}\n\n.spawn-button {\n    position: relative;\n    display: inline-block;\n  }\n  \n.spawn-button .unit-tooltip {\n    display: flex;\n    flex-direction: column;\n    text-align: left;\n    justify-content: left;\n    visibility: hidden;\n    width: 175px;\n    background-color: #555;\n    color: #fff;\n    border-radius: 6px;\n    padding: 5px 0;\n    position: absolute;\n    z-index: 1;\n    bottom: 50px;\n    left: 50%;\n    margin-left: -100px;\n    opacity: 0;\n    transition: opacity 0.3s;\n    border: solid rgb(0, 0, 0);\n}\n\n.spawn-button:hover .unit-tooltip {\n    visibility: visible;\n    opacity: 1;\n} \n\n.stat-line {\n    margin-left: 15px;\n}\n\n.stat-value {\n    color: rgb(152, 152, 226);\n    margin-left: 4px;\n    line-height: 1.4;\n}\n\n\n.spawn-button:focus {\n    outline: none;\n    box-shadow: none;\n}\n\n.icon {\n    margin-left: 80px;\n    margin-right: 8px;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -1469,6 +1469,41 @@ class Game {
         }
     }
 
+    renderTutorial() {
+        this.ctx.font = "900 20px Arial";
+        this.ctx.fillStyle = "black"
+        this.ctx.fillText("DEFEND THIS", 25, 300);  
+        this.ctx.fillText("DESTROY THIS", 1025, 300);  
+        this.ctx.fillText("SPEND THESE", 225, 75);  
+        this.ctx.fillText("CLICK THESE", 125, 340);  
+        this.renderUpArrow();
+        this.renderDownArrow();
+    }
+
+    renderUpArrow() {
+        this.ctx.beginPath();
+        this.ctx.moveTo(300, 50);
+        this.ctx.lineTo(300, 4);
+        this.ctx.moveTo(301, 4);
+        this.ctx.lineTo(290, 25);
+        this.ctx.moveTo(299, 4);
+        this.ctx.lineTo(310, 25);
+        this.ctx.lineWidth = 5;
+        this.ctx.stroke();
+    }
+
+    renderDownArrow() {
+        this.ctx.beginPath();
+        this.ctx.moveTo(200, 396);
+        this.ctx.lineTo(200, 350);
+        this.ctx.moveTo(201, 396);
+        this.ctx.lineTo(190, 375);
+        this.ctx.moveTo(199, 396);
+        this.ctx.lineTo(210, 375);
+        this.ctx.lineWidth = 5;
+        this.ctx.stroke();
+    }
+
     play() {
         this.drawAll();
         this.moveUnits();
@@ -1479,6 +1514,7 @@ class Game {
         this.giveIncome();
         this.renderStickAmount();
         this.spawnEnemies();
+        if(this.level === 1 && this.spawnTimer <= 1000) this.renderTutorial();
     }
 
 
@@ -1568,7 +1604,7 @@ class Level {
     }
 
     static level1(spawnTimer) {
-        if(spawnTimer%650 === 0 || spawnTimer === 250) {
+        if(spawnTimer%1000 === 0 || spawnTimer === 350) {
             return 'blob'
         } else return null;
     }
@@ -1854,7 +1890,7 @@ class Session {
                 if(this.reset === true) this.resetGame();
             }
             
-        }, 12) //17 is 60FPS
+        }, 17) //17 is 60FPS
     }
 
     renderStartScreen() {
@@ -1912,7 +1948,7 @@ class Session {
         this.ctx.clearRect(MIN_X, MIN_Y, MAX_X, MAX_Y);
         this.ctx.fillStyle = "#000654"
         this.ctx.font = "900 50px Arial";
-        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}`, 155, MAX_Y/2+15);
+        this.ctx.fillText(`YOU WIN! CLICK TO GO TO LEVEL ${this.level + 1}!`, 155, MAX_Y/2+15);
         this.game.players[0].income = 0;
     }
 
