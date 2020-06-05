@@ -8,15 +8,15 @@ const ANIMATE_FRAMES = 8;
 
 class Cat extends Unit{
     constructor(obj) {
-        obj.vel = [obj.vel*4, 0]
+        obj.vel = [obj.vel*2, 0]
         super(obj);
-        this.attackCooldown = 40;
-        this.timeBetweenAttacks = 50;
+        this.attackCooldown = 20;
+        this.timeBetweenAttacks = 35;
         this.projectileType = 'catProj';
-        this.hp = 3;
+        this.hp = 15;
         this.projectileSpeed = 3;
-        this.attackRange = 110;
-        this.projDamage = 1;
+        this.attackRange = 100;
+        this.projDamage = 2;
         
     }
 

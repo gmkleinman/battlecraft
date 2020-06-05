@@ -11,12 +11,12 @@ class Snake extends Unit{
         obj.vel = [obj.vel*2, 0]
         super(obj);
         this.attackCooldown = 80;
-        this.timeBetweenAttacks = 100;
+        this.timeBetweenAttacks = 90;
         this.projectileType = 'snakeProj';
-        this.hp = 3;
-        this.projectileSpeed = 6;
-        this.attackRange = 150;
-        this.projDamage = 1;
+        this.hp = 12;
+        this.projectileSpeed = 4;
+        this.attackRange = 170;
+        this.projDamage = 9;
     }
     
     draw(ctx) {

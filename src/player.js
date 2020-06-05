@@ -1,7 +1,7 @@
 class Player {
     constructor(team) {
         this.team = team;
-        this.sticks = 100;
+        this.sticks = 400;
         this.income = 10;
         this.incomeTimer = 0;
         this.incomeCooldown = 50;

@@ -62,9 +62,9 @@ class Unit {
 
     static cost(unitType) {
         let costs = {
-            'alien': 1,
-            'frog': 1,
-            'cat': 1,
+            'alien': 450,
+            'frog': 220,
+            'cat': 110,
             
             //AI units
             'blob': 1,

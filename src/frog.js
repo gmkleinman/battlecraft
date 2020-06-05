@@ -10,13 +10,13 @@ class Frog extends Unit{
     constructor(obj) {
         obj.vel = [obj.vel*2, 0]
         super(obj);
-        this.attackCooldown = 80;
-        this.timeBetweenAttacks = 100;
+        this.attackCooldown = 50;
+        this.timeBetweenAttacks = 75;
         this.projectileType = 'frogProj';
-        this.hp = 3;
-        this.projectileSpeed = 6;
-        this.attackRange = 250;
-        this.projDamage = 1;
+        this.hp = 16;
+        this.projectileSpeed = 7;
+        this.attackRange = 375;
+        this.projDamage = 6;
     }
     
     draw(ctx) {

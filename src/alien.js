@@ -8,15 +8,15 @@ const ANIMATE_FRAMES = 8;
 
 class Alien extends Unit{
     constructor(obj) {
-        obj.vel = [obj.vel, 0]
+        obj.vel = [obj.vel*1.5, 0]
         super(obj);
-        this.attackCooldown = 80;
-        this.timeBetweenAttacks = 100;
+        this.attackCooldown = 130;
+        this.timeBetweenAttacks = 150;
         this.projectileType = 'alienProj';
-        this.hp = 3;
+        this.hp = 9;
         this.projectileSpeed = 2;
-        this.attackRange = 500;
-        this.projDamage = 2;
+        this.attackRange = 450;
+        this.projDamage = 20;
 
     }
     

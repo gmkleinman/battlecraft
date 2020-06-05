@@ -7,6 +7,7 @@ const Frog = require('./frog')
 const Monk = require('./monk')
 const Snake = require('./snake')
 const Unit = require('./snake')
+const Level = require('./level')
 
 const MIN_X = 0;
 const MAX_X = 1200;
@@ -271,22 +272,12 @@ class Game {
             this.createArmy(this.players[0], 'frog');
         } 
         
-        this.spawnTimer = 700;
-    
+        this.spawnTimer = 1;
 
-        
-        // let cat = document.createElement("IMG");
-        // cat.setAttribute("src", catUrl1);
-        // cat.setAttribute("width", "30");
-        // cat.setAttribute("height", "30");
-        // document.getElementById('catIcon').appendChild(cat)
-        // document.body.appendChild(cat);
-
-        
-        //for testing:
-            // document.getElementById("spawnBlob").onclick = () => { 
-            //     this.createArmy(this.players[1], 'blob');
-            // } 
+        // for testing:
+        // document.getElementById("spawnBlob").onclick = () => { 
+        //     this.createArmy(this.players[1], 'blob');
+        // } 
         // document.getElementById("spawnMonk").onclick = () => { 
         //     this.createArmy(this.players[1], 'monk');
         // } 
@@ -296,11 +287,16 @@ class Game {
     }
 
     spawnEnemies() {
-        if(this.spawnTimer >= 1000) {
-            this.createArmy(this.players[1], 'blob');
+        let spawnUnit = Level.checkSpawn(this.spawnTimer, this.level);
+        if(spawnUnit){
+            this.createArmy(this.players[1], spawnUnit);
+        }
+
+        this.spawnTimer += 1;
+
+        if(this.spawnTimer === Number.MAX_SAFE_INTEGER) {
             this.spawnTimer = 0;
         }
-        this.spawnTimer += 1;
     }
 
     play() {

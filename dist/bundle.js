@@ -821,15 +821,15 @@ const ANIMATE_FRAMES = 8;
 
 class Alien extends Unit{
     constructor(obj) {
-        obj.vel = [obj.vel, 0]
+        obj.vel = [obj.vel*1.5, 0]
         super(obj);
-        this.attackCooldown = 80;
-        this.timeBetweenAttacks = 100;
+        this.attackCooldown = 130;
+        this.timeBetweenAttacks = 150;
         this.projectileType = 'alienProj';
-        this.hp = 3;
+        this.hp = 9;
         this.projectileSpeed = 2;
-        this.attackRange = 500;
-        this.projDamage = 2;
+        this.attackRange = 450;
+        this.projDamage = 20;
 
     }
     
@@ -971,10 +971,10 @@ class Blob extends Unit{
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'blobProj';
-        this.hp = 2;
-        this.projectileSpeed = 6;
+        this.hp = 10;
+        this.projectileSpeed = 5;
         this.attackRange = 200;
-        this.projDamage = 1;
+        this.projDamage = 5;
     }
     
     draw(ctx) {
@@ -1036,15 +1036,15 @@ const ANIMATE_FRAMES = 8;
 
 class Cat extends Unit{
     constructor(obj) {
-        obj.vel = [obj.vel*4, 0]
+        obj.vel = [obj.vel*2, 0]
         super(obj);
-        this.attackCooldown = 40;
-        this.timeBetweenAttacks = 50;
+        this.attackCooldown = 20;
+        this.timeBetweenAttacks = 35;
         this.projectileType = 'catProj';
-        this.hp = 3;
+        this.hp = 15;
         this.projectileSpeed = 3;
-        this.attackRange = 110;
-        this.projDamage = 1;
+        this.attackRange = 100;
+        this.projDamage = 2;
         
     }
 
@@ -1110,13 +1110,13 @@ class Frog extends Unit{
     constructor(obj) {
         obj.vel = [obj.vel*2, 0]
         super(obj);
-        this.attackCooldown = 80;
-        this.timeBetweenAttacks = 100;
+        this.attackCooldown = 50;
+        this.timeBetweenAttacks = 75;
         this.projectileType = 'frogProj';
-        this.hp = 3;
-        this.projectileSpeed = 6;
-        this.attackRange = 250;
-        this.projDamage = 1;
+        this.hp = 16;
+        this.projectileSpeed = 7;
+        this.attackRange = 375;
+        this.projDamage = 6;
     }
     
     draw(ctx) {
@@ -1177,6 +1177,7 @@ const Frog = __webpack_require__(/*! ./frog */ "./src/frog.js")
 const Monk = __webpack_require__(/*! ./monk */ "./src/monk.js")
 const Snake = __webpack_require__(/*! ./snake */ "./src/snake.js")
 const Unit = __webpack_require__(/*! ./snake */ "./src/snake.js")
+const Level = __webpack_require__(/*! ./level */ "./src/level.js")
 
 const MIN_X = 0;
 const MAX_X = 1200;
@@ -1441,22 +1442,12 @@ class Game {
             this.createArmy(this.players[0], 'frog');
         } 
         
-        this.spawnTimer = 700;
-    
+        this.spawnTimer = 1;
 
-        
-        // let cat = document.createElement("IMG");
-        // cat.setAttribute("src", catUrl1);
-        // cat.setAttribute("width", "30");
-        // cat.setAttribute("height", "30");
-        // document.getElementById('catIcon').appendChild(cat)
-        // document.body.appendChild(cat);
-
-        
-        //for testing:
-            // document.getElementById("spawnBlob").onclick = () => { 
-            //     this.createArmy(this.players[1], 'blob');
-            // } 
+        // for testing:
+        // document.getElementById("spawnBlob").onclick = () => { 
+        //     this.createArmy(this.players[1], 'blob');
+        // } 
         // document.getElementById("spawnMonk").onclick = () => { 
         //     this.createArmy(this.players[1], 'monk');
         // } 
@@ -1466,11 +1457,16 @@ class Game {
     }
 
     spawnEnemies() {
-        if(this.spawnTimer >= 1000) {
-            this.createArmy(this.players[1], 'blob');
+        let spawnUnit = Level.checkSpawn(this.spawnTimer, this.level);
+        if(spawnUnit){
+            this.createArmy(this.players[1], spawnUnit);
+        }
+
+        this.spawnTimer += 1;
+
+        if(this.spawnTimer === Number.MAX_SAFE_INTEGER) {
             this.spawnTimer = 0;
         }
-        this.spawnTimer += 1;
     }
 
     play() {
@@ -1540,6 +1536,97 @@ const createIcons = () => {
 
 /***/ }),
 
+/***/ "./src/level.js":
+/*!**********************!*\
+  !*** ./src/level.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+class Level {
+    constructor(levelNum) {
+        this.levelNum = levelNum;
+    }
+
+    static checkSpawn(spawnTimer, level) {
+        switch (level) {
+            case 1:
+                return this.level1(spawnTimer);
+            case 2:
+                return this.level2(spawnTimer);
+            case 3:
+                return this.level3(spawnTimer);
+            case 4:
+                return this.level4(spawnTimer);
+            case 5:
+                return this.level5(spawnTimer);
+            case 6:
+                return this.level6(spawnTimer);
+            default:
+                return this.finalLevel(spawnTimer, level);
+        }
+    }
+
+    static level1(spawnTimer) {
+        if(spawnTimer%650 === 0 || spawnTimer === 250) {
+            return 'blob'
+        } else return null;
+    }
+
+    static level2(spawnTimer) {
+        if(spawnTimer%600 === 0 || spawnTimer === 200) {
+            return 'snake'
+        } else return null;
+    }
+
+    static level3(spawnTimer) {
+        if(spawnTimer%1150 === 0 || spawnTimer === 150) {
+            return 'snake'
+        } else if(spawnTimer%1250 === 0) {
+            return 'blob'
+        } else return null;
+    }
+
+    static level4(spawnTimer) {
+        if(spawnTimer%1300 === 0 || spawnTimer === 150 || spawnTimer === 200) {
+            return 'snake'
+        } else if((spawnTimer+100)%1300 === 0) {
+            return 'snake'
+        } else return null;
+    }
+
+    static level5(spawnTimer) {
+        if(spawnTimer%1750 === 0 || spawnTimer === 200) {
+            return 'monk'
+        } else return null;
+    }
+    
+    static level6(spawnTimer) {
+        if(spawnTimer%2650 === 0 || spawnTimer === 300) {
+            return 'blob'
+        } else if(spawnTimer%2750 === 0 || spawnTimer === 400) {
+            return 'snake'
+        } else if(spawnTimer%2850 === 0 || spawnTimer === 900) {
+            return 'monk'
+        } else return null;
+    }
+
+    static finalLevel(spawnTimer, level) {
+        let modifier = 6/level;
+        if(spawnTimer%Math.floor(2500*modifier) === 0 || spawnTimer === 300) {
+            return 'blob'
+        } else if(spawnTimer%Math.floor(2600*modifier) === 0 || spawnTimer === 400) {
+            return 'snake'
+        } else if(spawnTimer%Math.floor(2700*modifier) === 0 || spawnTimer === 800) {
+            return 'monk'
+        } else return null;
+    }
+}
+
+module.exports = Level;
+
+/***/ }),
+
 /***/ "./src/monk.js":
 /*!*********************!*\
   !*** ./src/monk.js ***!
@@ -1557,15 +1644,15 @@ const ANIMATE_FRAMES = 8;
 
 class Monk extends Unit{
     constructor(obj) {
-        obj.vel = [obj.vel*2, 0]
+        obj.vel = [obj.vel, 0]
         super(obj);
-        this.attackCooldown = 80;
-        this.timeBetweenAttacks = 100;
+        this.attackCooldown = 130;
+        this.timeBetweenAttacks = 150;
         this.projectileType = 'monkProj';
-        this.hp = 3;
-        this.projectileSpeed = 6;
-        this.attackRange = 110;
-        this.projDamage = 2;
+        this.hp = 21;
+        this.projectileSpeed = 10;
+        this.attackRange = 350;
+        this.projDamage = 16;
     }
     
     draw(ctx) {
@@ -1620,7 +1707,7 @@ module.exports = Monk;
 class Player {
     constructor(team) {
         this.team = team;
-        this.sticks = 100;
+        this.sticks = 400;
         this.income = 10;
         this.incomeTimer = 0;
         this.incomeCooldown = 50;
@@ -1767,7 +1854,7 @@ class Session {
                 if(this.reset === true) this.resetGame();
             }
             
-        }, 17) //17 is 60FPS
+        }, 12) //17 is 60FPS
     }
 
     renderStartScreen() {
@@ -1866,12 +1953,12 @@ class Snake extends Unit{
         obj.vel = [obj.vel*2, 0]
         super(obj);
         this.attackCooldown = 80;
-        this.timeBetweenAttacks = 100;
+        this.timeBetweenAttacks = 90;
         this.projectileType = 'snakeProj';
-        this.hp = 3;
-        this.projectileSpeed = 6;
-        this.attackRange = 150;
-        this.projDamage = 1;
+        this.hp = 12;
+        this.projectileSpeed = 4;
+        this.attackRange = 170;
+        this.projDamage = 9;
     }
     
     draw(ctx) {
@@ -1987,9 +2074,9 @@ class Unit {
 
     static cost(unitType) {
         let costs = {
-            'alien': 1,
-            'frog': 1,
-            'cat': 1,
+            'alien': 450,
+            'frog': 220,
+            'cat': 110,
             
             //AI units
             'blob': 1,

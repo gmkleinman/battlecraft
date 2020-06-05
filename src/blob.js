@@ -13,10 +13,10 @@ class Blob extends Unit{
         this.attackCooldown = 80;
         this.timeBetweenAttacks = 100;
         this.projectileType = 'blobProj';
-        this.hp = 2;
-        this.projectileSpeed = 6;
+        this.hp = 10;
+        this.projectileSpeed = 5;
         this.attackRange = 200;
-        this.projDamage = 1;
+        this.projDamage = 5;
     }
     
     draw(ctx) {
