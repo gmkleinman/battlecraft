@@ -14,4 +14,4 @@ BattleCraft is a game written purely in JavaScript that resembles a precursor to
 * Unique unit types with individual properties like health and movespeed
 * Unique projectiles with individual properties like speed and damage
 
-![](gameplay_demo.gif)
+![](gameplay_demo2.gif)
